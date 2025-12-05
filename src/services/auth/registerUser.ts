@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server"
 
+import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
 import { registerZodSchema } from "@/zod/auth.validation";
 import { redirect } from "next/navigation";
@@ -40,14 +41,12 @@ export async function registerUser(
     }
 
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
-            method: 'POST',
+        const response = await serverFetch.post("/auth/register", {
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(finalData),
-            credentials: 'include',
-        });
+        })
 
         const data = await response.json();
 
