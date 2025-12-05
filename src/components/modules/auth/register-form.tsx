@@ -1,148 +1,152 @@
-'use client';
+"use client";
 
-import { useFormState, useFormStatus } from 'react-dom';
-// import { registerAction } from '@/lib/actions/auth';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, Mail, Lock, User } from 'lucide-react';
-import { useEffect } from 'react';
-import { div } from 'framer-motion/client';
-// import { toast } from '@/components/ui/use-toast';
+import { useActionState, useEffect } from "react";
+import { toast } from "sonner";
 
-// function SubmitButton() {
-//     const { pending } = useFormStatus();
+import { registerUser } from "@/services/auth/registerUser";
 
-//     return (
-//         <Button type="submit" className="w-full" disabled={pending} size="lg">
-//             {pending ? (
-//                 <>
-//                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-//                     Creating account...
-//                 </>
-//             ) : (
-//                 'Create Account'
-//             )}
-//         </Button>
-//     );
-// }
+import { Button } from "@/components/ui/button";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+
+import { Loader2, Lock, Mail, User } from "lucide-react";
 
 export default function RegisterForm() {
-    // const [state, formAction] = useFormState(registerAction, null);
+    const [state, formAction, isPending] = useActionState(registerUser, null);
 
-    // useEffect(() => {
-    //     if (state?.success === false && state?.message) {
-    //         toast({
-    //             title: 'Registration failed',
-    //             description: state.message,
-    //             variant: 'destructive',
-    //         });
-    //     }
-    // }, [state]);
+    useEffect(() => {
+        if (state?.success === false && state?.message) {
+            toast.error(state.message);
+        }
+    }, [state]);
 
     return (
-        <div>
-            <form className="space-y-4">
-                {/* {state?.success === false && state?.message && (
-                <Alert variant="destructive">
-                    <AlertDescription>{state.message}</AlertDescription>
-                </Alert>
-            )} */}
-
-                <div className="space-y-2">
-                    <Label htmlFor="fullName">Full Name</Label>
+        <form action={formAction} className="space-y-6">
+            <FieldGroup className="">
+                {/* FULL NAME */}
+                <Field>
+                    <FieldLabel htmlFor="fullName">Full Name</FieldLabel>
                     <div className="relative">
                         <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                        <Input
-                            id="fullName"
-                            name="fullName"
-                            type="text"
-                            placeholder="John Doe"
-                            required
-                            className="pl-10"
-                        />
+                        <Input id="fullName" name="fullName" placeholder="John Doe" className="pl-10" />
                     </div>
-                    {/* {state?.errors?.fullName && (
-                    <p className="text-sm text-red-500">{state.errors.fullName[0]}</p>
-                )} */}
-                </div>
+                    {state?.errors?.fullName && (
+                        <p className="text-sm text-red-500">{state.errors.fullName[0]}</p>
+                    )}
+                </Field>
 
-                <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
+                {/* EMAIL */}
+                <Field>
+                    <FieldLabel htmlFor="email">Email</FieldLabel>
                     <div className="relative">
                         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                        <Input
-                            id="email"
-                            name="email"
-                            type="email"
-                            placeholder="you@example.com"
-                            required
-                            className="pl-10"
-                        />
+                        <Input id="email" name="email" type="email" placeholder="you@example.com" className="pl-10" />
                     </div>
-                    {/* {state?.errors?.email && (
-                    <p className="text-sm text-red-500">{state.errors.email[0]}</p>
-                )} */}
-                </div>
+                    {state?.errors?.email && (
+                        <p className="text-sm text-red-500">{state.errors.email[0]}</p>
+                    )}
+                </Field>
 
-                <div className="space-y-2">
-                    <Label htmlFor="password">Password</Label>
+                {/* PASSWORD */}
+                <Field>
+                    <FieldLabel htmlFor="password">Password</FieldLabel>
                     <div className="relative">
                         <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                        <Input
-                            id="password"
-                            name="password"
-                            type="password"
-                            placeholder="••••••••"
-                            required
-                            className="pl-10"
-                        />
+                        <Input id="password" name="password" type="password" placeholder="•••••••" className="pl-10" />
                     </div>
-                    {/* {state?.errors?.password && (
-                    <p className="text-sm text-red-500">{state.errors.password[0]}</p>
-                )} */}
-                    {/* <p className="text-xs text-gray-500">
-                        Must be at least 8 characters with uppercase, lowercase, number and special character
-                    </p> */}
-                </div>
+                    {state?.errors?.password && (
+                        <p className="text-sm text-red-500">{state.errors.password[0]}</p>
+                    )}
+                </Field>
 
-                <div className="space-y-2">
-                    <Label htmlFor="password">Confirm Password</Label>
+                {/* CONFIRM PASSWORD */}
+                <Field>
+                    <FieldLabel htmlFor="confirmPassword">Confirm Password</FieldLabel>
                     <div className="relative">
                         <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                        <Input
-                            id="confirmPassword"
-                            name="confirmPassword"
-                            type="password"
-                            placeholder="••••••••"
-                            required
-                            className="pl-10"
-                        />
+                        <Input id="confirmPassword" name="confirmPassword" type="password" placeholder="•••••••" className="pl-10" />
                     </div>
-                    {/* {state?.errors?.password && (
-                    <p className="text-sm text-red-500">{state.errors.password[0]}</p>
-                )} */}
-                    {/* <p className="text-xs text-gray-500">
-                        Must be at least 8 characters with uppercase, lowercase, number and special character
-                    </p> */}
-                </div>
+                    {state?.errors?.confirmPassword && (
+                        <p className="text-sm text-red-500">{state.errors.confirmPassword[0]}</p>
+                    )}
+                </Field>
+            </FieldGroup>
 
-                {/* <SubmitButton /> */}
-                {/* <Button></Button> */}
+            {/* SUBMIT */}
+            <Button type="submit" className="w-full" disabled={isPending}>
+                {isPending ? (
+                    <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Creating account...
+                    </>
+                ) : (
+                    "Create Account"
+                )}
+            </Button>
 
-                <Button type="submit" className="w-full gradient-hero" >
-                    {/* {loading ? (
-           <>
-             <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-             Creating account...
-           </>
-         ) : (
-           'Create Account'
-         )} */}
-                    Create Account
-                </Button>
-            </form>
-        </div>
+            {/* <FieldDescription className="text-center">
+                Already have an account?{" "}
+                <a href="/login" className="text-blue-600 hover:underline">
+                    Sign in
+                </a>
+            </FieldDescription> */}
+        </form>
+
+        // <form action={formAction}>
+        //     <FieldGroup>
+        //         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        //             {/* Name */}
+        //             <Field>
+        //                 <FieldLabel htmlFor="name">Full Name</FieldLabel>
+        //                 <Input id="name" name="name" type="text" placeholder="John Doe" />
+        //                 {/* <InputFieldError field="name" state={state} /> */}
+        //             </Field>
+
+        //             {/* Email */}
+        //             <Field>
+        //                 <FieldLabel htmlFor="email">Email</FieldLabel>
+        //                 <Input
+        //                     id="email"
+        //                     name="email"
+        //                     type="email"
+        //                     placeholder="m@example.com"
+        //                 />
+        //                 {/* <InputFieldError field="email" state={state} /> */}
+        //             </Field>
+        //             {/* Password */}
+        //             <Field>
+        //                 <FieldLabel htmlFor="password">Password</FieldLabel>
+        //                 <Input id="password" name="password" type="password" />
+
+        //                 {/* <InputFieldError field="password" state={state} /> */}
+        //             </Field>
+        //             {/* Confirm Password */}
+        //             <Field className="md:col-span-2">
+        //                 <FieldLabel htmlFor="confirmPassword">Confirm Password</FieldLabel>
+        //                 <Input
+        //                     id="confirmPassword"
+        //                     name="confirmPassword"
+        //                     type="password"
+        //                 />
+
+        //                 {/* <InputFieldError field="confirmPassword" state={state} /> */}
+        //             </Field>
+        //         </div>
+        //         <FieldGroup className="mt-4">
+        //             <Field>
+        //                 <Button type="submit" disabled={isPending}>
+        //                     {isPending ? "Creating Account..." : "Create Account"}
+        //                 </Button>
+
+        //                 <FieldDescription className="px-6 text-center">
+        //                     Already have an account?{" "}
+        //                     <a href="/login" className="text-blue-600 hover:underline">
+        //                         Sign in
+        //                     </a>
+        //                 </FieldDescription>
+        //             </Field>
+        //         </FieldGroup>
+        //     </FieldGroup>
+        // </form>
     );
 }
