@@ -1,13 +1,15 @@
 // import { getNewAccessToken } from "@/services/auth/auth.service";
 // import { getCookie } from "@/services/auth/tokenHandlers";
 
+import { getCookie } from "@/services/auth/tokenHandlers";
+
 const BACKEND_API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
 
 const serverFetchHelper = async (endpoint: string, options: RequestInit): Promise<Response> => {
     const { headers, ...restOptions } = options;
 
-    // const accessToken = await getCookie("accessToken");
-    const accessToken = null;
+    const accessToken = await getCookie("accessToken");
+    // const accessToken = null;
 
     // to stop recursion loop
     // if (endpoint !== "/auth/refresh-token") {

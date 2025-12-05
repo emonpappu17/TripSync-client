@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+"use server"
 import { serverFetch } from "@/lib/server-fetch";
 import { IUser } from "@/types/user.interface";
 import { getCookie } from "./tokenHandlers";
