@@ -10,15 +10,20 @@ import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 
 import { Loader2, Lock, Mail, User } from "lucide-react";
+import InputFieldError from "@/components/shared/InputFieldError";
 
 export default function RegisterForm() {
     const [state, formAction, isPending] = useActionState(registerUser, null);
+
+    console.log({ state });
 
     useEffect(() => {
         if (state?.success === false && state?.message) {
             toast.error(state.message);
         }
     }, [state]);
+
+    console.log({ state });
 
     return (
         <form action={formAction} className="space-y-6">
@@ -30,9 +35,10 @@ export default function RegisterForm() {
                         <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                         <Input id="fullName" name="fullName" placeholder="John Doe" className="pl-10" />
                     </div>
-                    {state?.errors?.fullName && (
+                    {/* {state?.errors?.fullName && (
                         <p className="text-sm text-red-500">{state.errors.fullName[0]}</p>
-                    )}
+                    )} */}
+                    <InputFieldError field="fullName" state={state}></InputFieldError>
                 </Field>
 
                 {/* EMAIL */}

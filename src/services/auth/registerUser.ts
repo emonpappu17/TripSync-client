@@ -1,44 +1,58 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server"
 
+import { zodValidator } from "@/lib/zodValidator";
+import { registerZodSchema } from "@/zod/auth.validation";
+
 export async function registerUser(
     prevState: any,
     formData: FormData
 ): Promise<any> {
     // console.log({ formData });
 
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
-    const fullName = formData.get('fullName') as string;
-    const confirmPassword = formData.get('confirmPassword') as string;
+    // const email = formData.get('email') as string;
+    // const password = formData.get('password') as string;
+    // const fullName = formData.get('fullName') as string;
+    // const confirmPassword = formData.get('confirmPassword') as string;
 
-    console.log({ email, password, fullName, confirmPassword });
+    const payload = {
+        email: formData.get('email') as string,
+        password: formData.get('password') as string,
+        fullName: formData.get('fullName') as string,
+        confirmPassword: formData.get('confirmPassword') as string,
+    }
+
+    console.log({ payload })
+
+    if (zodValidator(payload, registerZodSchema).success === false) {
+        return zodValidator(payload, registerZodSchema)
+    }
 
     // Validation
-    const errors: Record<string, string[]> = {};
+    // const errors: Record<string, string[]> = {};
 
-    if (!email) {
-        errors.email = ['Email is required'];
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-        errors.email = ['Email is invalid'];
-    }
+    // if (!email) {
+    //     errors.email = ['Email is required'];
+    // } else if (!/\S+@\S+\.\S+/.test(email)) {
+    //     errors.email = ['Email is invalid'];
+    // }
 
-    if (!password) {
-        errors.password = ['Password is required'];
-    } else if (password.length < 8) {
-        errors.password = ['Password must be at least 8 characters'];
-    }
+    // if (!password) {
+    //     errors.password = ['Password is required'];
+    // } else if (password.length < 8) {
+    //     errors.password = ['Password must be at least 8 characters'];
+    // }
 
-    if (!fullName) {
-        errors.fullName = ['Full name is required'];
-    }
+    // if (!fullName) {
+    //     errors.fullName = ['Full name is required'];
+    // }
 
-    if (Object.keys(errors).length > 0) {
-        return {
-            success: false,
-            errors,
-        };
-    }
+    // if (Object.keys(errors).length > 0) {
+    //     return {
+    //         success: false,
+    //         errors,
+    //     };
+    // }
 
     // try {
     //     const response = await fetch(`${API_URL}/auth/register`, {
