@@ -13,8 +13,6 @@ import { Loader2, Lock, Mail, User } from "lucide-react";
 import InputFieldError from "@/components/shared/InputFieldError";
 
 export default function RegisterForm() {
-    const formRef = useRef<HTMLFormElement>(null);
-
     const [state, formAction, isPending] = useActionState(registerUser, null);
 
     console.log({ state });
@@ -28,7 +26,7 @@ export default function RegisterForm() {
     console.log({ state });
 
     return (
-        <form ref={formRef} action={formAction} className="space-y-6">
+        <form action={formAction} className="space-y-6">
             <FieldGroup className="">
                 {/* FULL NAME */}
                 <Field>

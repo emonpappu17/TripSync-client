@@ -1,84 +1,78 @@
-'use client';
+"use client";
 
-import { useFormState, useFormStatus } from 'react-dom';
-// import { loginAction } from '@/lib/actions/auth';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, Mail, Lock } from 'lucide-react';
-import { useEffect } from 'react';
-// import { toast } from '@/components/ui/use-toast';
+import { useActionState, useEffect, useRef } from "react";
+import { toast } from "sonner";
 
-function SubmitButton() {
-    const { pending } = useFormStatus();
+import { loginUser } from "@/services/auth/loginUser"; // <-- your server action
 
-    return (
-        <Button type="submit" className="w-full" disabled={pending} size="lg">
-            {pending ? (
-                <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Signing in...
-                </>
-            ) : (
-                'Sign In'
-            )}
-        </Button>
-    );
-}
+import { Button } from "@/components/ui/button";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+
+import { Loader2, Mail, Lock } from "lucide-react";
+import InputFieldError from "@/components/shared/InputFieldError";
 
 export default function LoginForm() {
-    // const [state, formAction] = useFormState(loginAction, null);
+    const [state, formAction, isPending] = useActionState(loginUser, null);
 
-    // useEffect(() => {
-    //     if (state?.success === false && state?.message) {
-    //         toast({
-    //             title: 'Login failed',
-    //             description: state.message,
-    //             variant: 'destructive',
-    //         });
-    //     }
-    // }, [state]);
+    useEffect(() => {
+        if (state?.success === false && state?.message) {
+            toast.error(state.message || "Login failed!");
+        }
+    }, [state]);
 
     return (
-        <form className="space-y-4">
-            {/* {state?.success === false && state?.message && (
-                <Alert variant="destructive">
-                    <AlertDescription>{state.message}</AlertDescription>
-                </Alert>
-            )} */}
+        <form action={formAction} className="space-y-6">
+            <FieldGroup>
+                {/* EMAIL */}
+                <Field>
+                    <FieldLabel htmlFor="email">Email</FieldLabel>
+                    <div className="relative">
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                        <Input
+                            required
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="you@example.com"
+                            className="pl-10"
+                            defaultValue={state?.formData?.email}
+                        />
+                    </div>
+                    <InputFieldError field="email" state={state} />
+                </Field>
 
-            <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                    <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        placeholder="you@example.com"
-                        required
-                        className="pl-10"
-                    />
-                </div>
-            </div>
+                {/* PASSWORD */}
+                <Field>
+                    <FieldLabel htmlFor="password">Password</FieldLabel>
+                    <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                        <Input
+                            required
+                            id="password"
+                            name="password"
+                            type="password"
+                            placeholder="••••••••"
+                            className="pl-10"
+                            defaultValue={state?.formData?.password}
+                        />
+                    </div>
+                    <InputFieldError field="password" state={state} />
+                </Field>
+            </FieldGroup>
 
-            <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                    <Input
-                        id="password"
-                        name="password"
-                        type="password"
-                        placeholder="••••••••"
-                        required
-                        className="pl-10"
-                    />
-                </div>
-            </div>
-
-            <SubmitButton />
+            {/* SUBMIT */}
+            <Button type="submit" className="w-full" disabled={isPending}>
+                {isPending ? (
+                    <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Signing in...
+                    </>
+                ) : (
+                    "Sign In"
+                )}
+            </Button>
         </form>
     );
 }
+
