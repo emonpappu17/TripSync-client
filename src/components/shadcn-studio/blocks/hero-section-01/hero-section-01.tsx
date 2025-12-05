@@ -7,15 +7,15 @@ const HeroSection = () => {
       {/* Hero Content */}
       <div className='mx-auto flex max-w-7xl flex-col items-center gap-8 px-4 text-center sm:px-6 lg:px-8'>
         <div className='bg-muted flex items-center gap-2.5 rounded-full border px-3 py-2'>
-          <Badge>AI-Powered</Badge>
-          <span className='text-muted-foreground'>Solution for client-facing businesses</span>
+          <Badge>Adventure Ready</Badge>
+          <span className='text-muted-foreground'>Connect with fellow travelers</span>
         </div>
 
-        <h1 className='text-3xl leading-[1.29167] font-bold text-balance sm:text-4xl lg:text-5xl'>
-          Sizzling Summer Delights
+        <h1 className='text-3xl leading-[1.29167] font-bold text-foreground sm:text-4xl lg:text-5xl'>
+          Explore the World Together
           <br />
           <span className='relative'>
-            Effortless
+            Find Your
             <svg
               width='223'
               height='12'
@@ -26,13 +26,13 @@ const HeroSection = () => {
             >
               <path
                 d='M1.11716 10.428C39.7835 4.97282 75.9074 2.70494 114.894 1.98894C143.706 1.45983 175.684 0.313587 204.212 3.31596C209.925 3.60546 215.144 4.59884 221.535 5.74551'
-                stroke='url(#paint0_linear_10365_68643)'
+                stroke='url(#paint0_linear_hero)'
                 strokeWidth='2'
                 strokeLinecap='round'
               />
               <defs>
                 <linearGradient
-                  id='paint0_linear_10365_68643'
+                  id='paint0_linear_hero'
                   x1='18.8541'
                   y1='3.72033'
                   x2='42.6487'
@@ -45,28 +45,24 @@ const HeroSection = () => {
               </defs>
             </svg>
           </span>{' '}
-          Recipes for Parties!
+          Travel Buddies!
         </h1>
 
         <p className='text-muted-foreground'>
-          Dive into a world of flavor this summer with our collection of Sizzling Summer Delights!
+          Discover travelers heading to your next destination. Share plans, make friends, and explore together.
           <br />
-          From refreshing appetizers to delightful desserts
+          Start your journey by finding a compatible travel companion.
         </p>
 
         <Button size='lg' asChild>
-          <a href='#'>Try It Now</a>
+          <a href='/explore'>Find Travel Buddy</a>
         </Button>
       </div>
 
-      {/* Image */}
-      <img
-        src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/hero/image-19.png'
-        alt='Dishes'
-        className='min-h-67 w-full object-cover'
-      />
+
     </section>
   )
 }
 
 export default HeroSection
+
