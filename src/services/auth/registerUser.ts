@@ -3,18 +3,12 @@
 
 import { zodValidator } from "@/lib/zodValidator";
 import { registerZodSchema } from "@/zod/auth.validation";
+import { redirect } from "next/navigation";
 
 export async function registerUser(
     prevState: any,
     formData: FormData
 ): Promise<any> {
-    // console.log({ formData });
-
-    // const email = formData.get('email') as string;
-    // const password = formData.get('password') as string;
-    // const fullName = formData.get('fullName') as string;
-    // const confirmPassword = formData.get('confirmPassword') as string;
-
     const payload = {
         email: formData.get('email') as string,
         password: formData.get('password') as string,
@@ -22,63 +16,62 @@ export async function registerUser(
         confirmPassword: formData.get('confirmPassword') as string,
     }
 
-    console.log({ payload })
+    // console.log({ payload })
 
-    if (zodValidator(payload, registerZodSchema).success === false) {
-        return zodValidator(payload, registerZodSchema)
+    // Input Validation
+    // if (zodValidator(payload, registerZodSchema).success === false) {
+    //     return zodValidator(payload, registerZodSchema)
+    // }
+
+    const validation = zodValidator(payload, registerZodSchema);
+
+    if (!validation.success) {
+        return {
+            success: false,
+            errors: validation.errors,
+            formData: payload, // <-- keep submitted values
+        };
     }
 
-    // Validation
-    // const errors: Record<string, string[]> = {};
+    const finalData = {
+        email: payload.email,
+        fullName: payload.fullName,
+        password: payload.password
+    }
 
-    // if (!email) {
-    //     errors.email = ['Email is required'];
-    // } else if (!/\S+@\S+\.\S+/.test(email)) {
-    //     errors.email = ['Email is invalid'];
-    // }
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(finalData),
+            credentials: 'include',
+        });
 
-    // if (!password) {
-    //     errors.password = ['Password is required'];
-    // } else if (password.length < 8) {
-    //     errors.password = ['Password must be at least 8 characters'];
-    // }
+        const data = await response.json();
 
-    // if (!fullName) {
-    //     errors.fullName = ['Full name is required'];
-    // }
+        // console.log({ data });
 
-    // if (Object.keys(errors).length > 0) {
-    //     return {
-    //         success: false,
-    //         errors,
-    //     };
-    // }
+        if (!response.ok) {
+            return {
+                success: false,
+                message: data.message || 'Registration failed',
+            };
+        }
 
-    // try {
-    //     const response = await fetch(`${API_URL}/auth/register`, {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({ email, password, fullName }),
-    //         credentials: 'include',
-    //     });
-
-    //     const data = await response.json();
-
-    //     if (!response.ok) {
-    //         return {
-    //             success: false,
-    //             message: data.message || 'Registration failed',
-    //         };
-    //     }
-
-    //     revalidatePath('/', 'layout');
-    //     redirect('/dashboard');
-    // } catch (error: any) {
-    //     return {
-    //         success: false,
-    //         message: error.message || 'Something went wrong',
-    //     };
-    // }
+        // revalidatePath('/', 'layout');
+        redirect('/');
+    } catch (error: any) {
+        // return {
+        //     success: false,
+        //     message: error.message || 'Something went wrong',
+        // };
+        // Re-throw NEXT_REDIRECT errors so Next.js can handle them
+        if (error?.digest?.startsWith('NEXT_REDIRECT')) {
+            throw error;
+        }
+        console.log(error);
+        return { success: false, message: `${process.env.NODE_ENV === 'development' ? error.message : "Registration Failed. Please try again."}` };
+    }
 }
