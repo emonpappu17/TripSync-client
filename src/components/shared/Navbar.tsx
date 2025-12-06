@@ -84,7 +84,7 @@
 // export default Navbar;
 
 
-"use client";
+"use client"
 
 import { Button } from '@/components/ui/button';
 import {
@@ -101,25 +101,36 @@ import {
 import { cn } from '@/lib/utils';
 import { MenuIcon } from 'lucide-react';
 import Link from 'next/link';
+// import { usePathname } from 'next/navigation';
+import { logoutUser } from '@/services/auth/logoutUser';
 import { usePathname } from 'next/navigation';
 import Logo from '../shadcn-studio/logo';
 
-const navigationData = [
-    { title: 'Home', href: '/' },
-    { title: 'Explore', href: '/explore' },
-    { title: 'My Plans', href: '/travel-plans' },
-    { title: 'Profile', href: '/profile' },
-    { title: 'About', href: '/about' },
-];
 
-const Navbar = () => {
+
+const Navbar = ({ role }: { role: string }) => {
     const pathname = usePathname();
 
-    // const user = getUserInfo();
-    // console.log({ user });
+    const navigationData = role ? role === 'ADMIN' ? [
+        { title: 'Home', href: '/' },
+        { title: 'Dashboard', href: '/dashboard' },
+        { title: 'Manage Users', href: '/manage-users' },
+        { title: 'Manage Plans', href: '/manage-plans' },
+        { title: 'Profile', href: '/profile' },
+    ] : [
+        { title: 'Home', href: '/' },
+        { title: 'Explore', href: '/explore' },
+        { title: 'My Plans', href: '/my-plans' },
+        { title: 'Profile', href: '/profile' },
+        { title: 'Dashboard', href: '/dashboard' },
+    ] : [
+        { title: 'Home', href: '/' },
+        { title: 'Explore', href: '/explore' },
+        { title: 'Find Buddy', href: '/find-buddy' },
+    ]
 
     return (
-        <header className={cn('bg-background sticky top-0 z-50 h-16 border-b')}>
+        <nav className={cn('bg-background sticky top-0 z-50 h-16 border-b')}>
             <div className='mx-auto flex h-full max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8'>
                 {/* Logo */}
                 <Link href={'/'}>
@@ -148,16 +159,27 @@ const Navbar = () => {
                 </NavigationMenu>
 
                 {/* Desktop Login Button */}
-                <Button className='rounded-lg max-md:hidden' asChild>
-                    <Link href='/login'>Login</Link>
-                </Button>
+                {
+                    role ?
+                        <Button className='rounded-lg max-md:hidden' variant={"destructive"} onClick={logoutUser}>
+                            Logout
+                        </Button>
+                        : <Button className='rounded-lg max-md:hidden' asChild>
+                            <Link href='/login'>Login</Link>
+                        </Button>
+                }
 
                 {/* Mobile Menu */}
                 <div className='flex gap-4 md:hidden'>
-                    <Button className='rounded-lg' asChild>
-                        <Link href='/login'>Login</Link>
-                    </Button>
-
+                    {
+                        role ?
+                            <Button className='rounded-lg' variant={"destructive"} onClick={logoutUser}>
+                                Logout
+                            </Button>
+                            : <Button className='rounded-lg' asChild>
+                                <Link href='/login'>Login</Link>
+                            </Button>
+                    }
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant='outline' size='icon'>
@@ -184,7 +206,7 @@ const Navbar = () => {
                     </DropdownMenu>
                 </div>
             </div>
-        </header>
+        </nav>
     );
 };
 

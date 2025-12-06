@@ -26,26 +26,31 @@ export const getUserInfo = async (): Promise<IUser | any> => {
 
             const verifiedToken = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET as string) as JwtPayload;
 
-            userInfo = {
-                name: verifiedToken.name || "Unknown User",
-                email: verifiedToken.email,
-                role: verifiedToken.role,
-            }
+            // userInfo = {
+            //     fullName: verifiedToken.name || "Unknown User",
+            //     email: verifiedToken.email,
+            //     role: verifiedToken.role,
+            // }
+
+            userInfo = result.data;
+
+            return userInfo;
         }
 
-        userInfo = {
-            name: result.data.fullName || "Unknown User",
-            ...result.data
-        };
+        // userInfo = {
+        //     fullName: result.data.fullName || "Unknown User",
+        //     ...result.data
+        // };
 
         return userInfo;
     } catch (error: any) {
         console.log(error);
-        return {
-            id: "",
-            name: "Unknown User",
-            email: "",
-            role: "USER",
-        };
+        return null
+        // return {
+        //     id: "",
+        //     name: "Unknown User",
+        //     email: "",
+        //     role: "USER",
+        // };
     }
 }
