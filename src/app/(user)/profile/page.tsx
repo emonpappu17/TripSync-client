@@ -4,17 +4,19 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { getUserInfo } from '@/services/auth/getUserInfo';
+import { getMyReviews } from '@/services/review';
 import { getMyTravelPlans } from '@/services/travel-plan';
 import { ArrowLeft, Award, Calendar, Edit, Mail, MapPin, Star, Users } from 'lucide-react';
 import Link from 'next/link';
-import React from 'react';
 
 const ProfilePage = async () => {
     const profileUser = await getUserInfo()
     const userPlans = await getMyTravelPlans();
+    const userReviews = await getMyReviews();
     const isOwnProfile = true
-    console.log({ profileUser });
-    console.log({ userPlans });
+    // console.log({ profileUser });
+    // console.log({ userPlans });
+    console.log({ userReviews });
     return (
         <div className="min-h-screen py-8">
             <div className="container mx-auto px-4 max-w-6xl">
@@ -197,21 +199,21 @@ const ProfilePage = async () => {
                         <div>
                             <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
                                 <Award className="w-6 h-6 text-primary" />
-                                Reviews ({userReviews.length})
+                                Reviews ({userReviews?.data?.length})
                             </h2>
 
-                            {userReviews.length > 0 ? (
+                            {userReviews?.data?.length > 0 ? (
                                 <div className="space-y-4">
-                                    {userReviews.map((review) => (
+                                    {userReviews?.data?.map((review: any) => (
                                         <Card key={review.id} className="p-6">
                                             <div className="flex gap-3 mb-3">
                                                 <Avatar className="w-10 h-10">
-                                                    <AvatarImage src={review.fromUserImage} />
-                                                    <AvatarFallback>{review.fromUserName[0]}</AvatarFallback>
+                                                    <AvatarImage src={review.formReviewer.profileImage} />
+                                                    <AvatarFallback>{review.formReviewer.fullName}</AvatarFallback>
                                                 </Avatar>
                                                 <div className="flex-1">
                                                     <div className="flex items-center justify-between mb-1">
-                                                        <h4 className="font-semibold">{review.fromUserName}</h4>
+                                                        <h4 className="font-semibold">{review.formReviewer.fullName}</h4>
                                                         <div className="flex gap-0.5">
                                                             {Array.from({ length: review.rating }).map((_, i) => (
                                                                 <Star key={i} className="w-4 h-4 fill-accent text-accent" />
@@ -219,7 +221,7 @@ const ProfilePage = async () => {
                                                         </div>
                                                     </div>
                                                     <p className="text-sm text-muted-foreground mb-2">
-                                                        Trip to {review.tripDestination} • {new Date(review.date).toLocaleDateString()}
+                                                        Trip to {review.tourPlanReview.destination} • {new Date(review.createdAt).toLocaleDateString()}
                                                     </p>
                                                 </div>
                                             </div>
