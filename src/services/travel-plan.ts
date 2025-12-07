@@ -15,3 +15,17 @@ export async function getMyTravelPlans() {
         };
     }
 }
+
+export async function deleteTravelPlan(id: string) {
+    try {
+        const response = await serverFetch.delete(`/travelPlan/${id}`)
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        };
+    }
+}
