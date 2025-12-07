@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useRef } from "react";
+import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
 
 import { registerUser } from "@/services/auth/registerUser";
@@ -9,13 +9,13 @@ import { Button } from "@/components/ui/button";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 
-import { Loader2, Lock, Mail, User } from "lucide-react";
 import InputFieldError from "@/components/shared/InputFieldError";
+import { Loader2, Lock, Mail, User } from "lucide-react";
 
 export default function RegisterForm() {
     const [state, formAction, isPending] = useActionState(registerUser, null);
 
-    console.log({ state });
+    // console.log({ state });
 
     useEffect(() => {
         if (state?.success === false && state?.message) {
@@ -23,7 +23,7 @@ export default function RegisterForm() {
         }
     }, [state]);
 
-    console.log({ state });
+    // console.log({ state });
 
     return (
         <form action={formAction} className="space-y-6">

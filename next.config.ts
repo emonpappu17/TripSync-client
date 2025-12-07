@@ -6,6 +6,20 @@ const nextConfig: NextConfig = {
   // compiler: {
   //   sourceMaps: false,
   // },
+
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: "res.cloudinary.com",
+      }
+    ]
+  },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '5mb',
+    },
+  },
 };
 
 export default nextConfig;

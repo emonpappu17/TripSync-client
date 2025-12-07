@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ProfileCard from '@/components/modules/profile/ProfileCard';
+import { BackButton } from '@/components/shared/BackButton';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { getUserInfo } from '@/services/auth/getUserInfo';
 import { getMyReviews } from '@/services/review';
 import { getMyTravelPlans } from '@/services/travel-plan';
 import { IUser } from '@/types/user.interface';
-import { ArrowLeft, Award, Calendar, Edit, Mail, MapPin, Star, Users } from 'lucide-react';
+import { Award, Calendar, Star, Users } from 'lucide-react';
 import Link from 'next/link';
 
 const ProfilePage = async () => {
@@ -18,18 +18,11 @@ const ProfilePage = async () => {
     const isOwnProfile = true
     // console.log({ profileUser });
     // console.log({ userPlans });
-    console.log({ userReviews });
+    // console.log({ userReviews });
     return (
         <div className="min-h-screen py-8">
             <div className="container mx-auto px-4 max-w-6xl">
-                <Button
-                    variant="ghost"
-                    // onClick={() => navigate(-1)}
-                    className="mb-6"
-                >
-                    <ArrowLeft className="w-4 h-4 mr-2" />
-                    Back
-                </Button>
+                <BackButton label='Back'></BackButton>
 
                 <div className="grid lg:grid-cols-3 gap-8">
                     {/* Profile Card */}
