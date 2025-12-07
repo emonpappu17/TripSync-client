@@ -5,7 +5,6 @@ import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator"; // adjust import
 import { userUpdateZodSchema } from "@/zod/user.validation";
 import { revalidateTag } from "next/cache";
-import { redirect } from "next/navigation";
 
 export async function updateUserProfile(_prevState: any, formData: FormData): Promise<any> {
     // -------------------

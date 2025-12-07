@@ -120,7 +120,7 @@ const Navbar = ({ role }: { role: string }) => {
     ] : [
         { title: 'Home', href: '/' },
         { title: 'Explore', href: '/explore' },
-        { title: 'My Plans', href: '/my-plans' },
+        { title: 'My Plans', href: '/travel-plans' },
         { title: 'Profile', href: '/profile' },
         { title: 'Dashboard', href: '/dashboard' },
     ] : [
