@@ -3,16 +3,17 @@
 import { serverFetch } from "@/lib/server-fetch";
 
 // Ensure these imports are correct based on your file structure
-import { serverFetch } from "@/lib/server-fetch";
+// import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
+import { createTravelPlanZodSchema } from "@/zod/travelPlan.validation";
 import { revalidateTag } from "next/cache";
 // NOTE: You must define this Zod schema based on the structure provided previously
 // export const createTravelPlanZodSchema = z.object({...});
 // Assuming it's in "@/zod/travel-plan.validation"
-import { createTravelPlanZodSchema } from "@/zod/travel-plan.validation";
+// import { createTravelPlanZodSchema } from "@/zod/travel-plan.validation";
 
 // NOTE: Add 'use server' at the top of this file
-"use server"
+// "use server"
 
 export async function createTravelPlanAction(
     _prevState: any,
@@ -58,7 +59,7 @@ export async function createTravelPlanAction(
         activities: activities,
     };
 
-    // console.log({ validationPayload });
+    console.log({ validationPayload });
 
     // -------------------
     // 3. Validate with Zod
@@ -98,36 +99,37 @@ export async function createTravelPlanAction(
         newFormData.append("file", image, image.name); // Using 'file' as the key for the API (matching updateUserProfile)
     }
 
-    // console.log('newFormData==>', newFormData);
+    console.log('backendPayload==>', backendPayload);
+    console.log('newFormData==>', newFormData);
 
     // -------------------
     // 5. Send to backend
     // -------------------
-    try {
-        // Use POST for creation
-        const response = await serverFetch.post("/travel-plan/create-plan", {
-            body: newFormData,
-        });
+    // try {
+    //     // Use POST for creation
+    //     const response = await serverFetch.post("/travelPlan", {
+    //         body: newFormData,
+    //     });
 
-        const result = await response.json();
+    //     const result = await response.json();
 
-        // Optional: Revalidate cache for the list of plans
-        revalidateTag("travel-plans", { expire: 0 });
+    //     // Optional: Revalidate cache for the list of plans
+    //     revalidateTag("travel-plans", { expire: 0 });
 
-        return result;
-    } catch (error: any) {
-        if (error?.digest?.startsWith('NEXT_REDIRECT')) {
-            throw error;
-        }
-        console.log(error);
-        return {
-            success: false,
-            message: `${process.env.NODE_ENV === 'development'
-                ? error.message
-                : "Plan creation failed. Please try again."}`,
-            formData: validationPayload,
-        };
-    }
+    //     return result;
+    // } catch (error: any) {
+    //     if (error?.digest?.startsWith('NEXT_REDIRECT')) {
+    //         throw error;
+    //     }
+    //     console.log(error);
+    //     return {
+    //         success: false,
+    //         message: `${process.env.NODE_ENV === 'development'
+    //             ? error.message
+    //             : "Plan creation failed. Please try again."}`,
+    //         formData: validationPayload,
+    //     };
+    // }
 }
 
 export async function getMyTravelPlans() {
