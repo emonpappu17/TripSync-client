@@ -1,4 +1,6 @@
 import TravelPlanForm from "@/components/modules/travelPlan/TravelPlanForm";
+import { BackButton } from "@/components/shared/BackButton";
+import { Card } from "@/components/ui/card";
 import { getTravelPlanById } from "@/services/travel-plan";
 import { ITravelPlan } from "@/types/travelPlan.interface";
 
@@ -15,13 +17,14 @@ const EditTravelPlanPage = async ({
 
     // console.log({ plan });
     return (
-        <div className="max-w-4xl mx-auto space-y-6">
-            <div>
-                <h1 className="text-3xl font-bold mb-2">Edit Travel Plan</h1>
-                <p className="text-muted-foreground">Update your travel details</p>
+        <div className="min-h-screen py-8 mb-24">
+            <div className="container mx-auto px-4 max-w-3xl">
+                <BackButton label="Back" />
+                <Card className="p-8">
+                    <h1 className="text-3xl font-bold mb-2">Update your travel details</h1>
+                    <TravelPlanForm  plan={plan}/>
+                </Card>
             </div>
-
-            <TravelPlanForm plan={plan} />
         </div>
     );
 };

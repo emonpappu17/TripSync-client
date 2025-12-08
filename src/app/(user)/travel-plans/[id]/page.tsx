@@ -20,7 +20,6 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { toast } from "sonner";
 
 const DetailTravelPlanPage = async ({
     params,
@@ -34,8 +33,8 @@ const DetailTravelPlanPage = async ({
     const plan = res.data as ITravelPlan;
 
     // Check if current user is the plan owner by comparing IDs
-    const isOwner = false;
-    // const isOwner = currentUser?.id === plan.userId;
+    // const isOwner = false;
+    const isOwner = currentUser?.id === plan.userId;
 
     // Get plan owner data from nested user object
     const planOwner = plan.user;
