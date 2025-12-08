@@ -34,8 +34,8 @@ const DetailTravelPlanPage = async ({
     const plan = res.data as ITravelPlan;
 
     // Check if current user is the plan owner by comparing IDs
-    // const isOwner = false;
-    const isOwner = currentUser?.id === plan.userId;
+    const isOwner = false;
+    // const isOwner = currentUser?.id === plan.userId;
 
     // Get plan owner data from nested user object
     const planOwner = plan.user;
@@ -265,12 +265,16 @@ const DetailTravelPlanPage = async ({
 
                                 {!isOwner && (
                                     <>
-                                        <Button variant="outline" className="w-full" size="lg" onClick={() => toast.success("This feature will add soon!")}>
+                                        <Button variant="outline" className="w-full" size="lg"
+                                        //  onClick={() => toast.success("This feature will add soon!")}
+                                            >
                                             <Mail className="w-4 h-4 mr-2" />
                                             Message Host
                                         </Button>
 
-                                        <Button variant="ghost" className="w-full" size="lg" onClick={() => toast.success("This feature will add soon!")}>
+                                        <Button variant="ghost" className="w-full" size="lg" 
+                                        // onClick={() => toast.success("This feature will add soon!")}
+                                        >
                                             <Heart className="w-4 h-4 mr-2" />
                                             Save Trip
                                         </Button>

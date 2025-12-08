@@ -5,6 +5,7 @@ import { Card } from '@/components/ui/card';
 import { IUser } from '@/types/user.interface';
 import { Edit, Mail, MapPin, Star } from 'lucide-react';
 import Link from 'next/link';
+import { toast } from 'sonner';
 
 const ProfileCard = ({ profileUser, isOwnProfile }: { profileUser: IUser, isOwnProfile: boolean }) => {
     return (
@@ -74,15 +75,17 @@ const ProfileCard = ({ profileUser, isOwnProfile }: { profileUser: IUser, isOwnP
                     </Link>
                 ) : (
                     <div className="space-y-3">
-                        <Button className="w-full gradient-hero">
+                        <Button className="w-full gradient-hero" 
+                        // onClick={() => toast.success("This feature will add soon!")}
+                        >
                             <Mail className="w-4 h-4 mr-2" />
                             Send Message
                         </Button>
-                        <Link href="/pricing">
+                        {/* <Link href="/pricing">
                             <Button className="w-full" variant="outline">
                                 Upgrade to Premium
                             </Button>
-                        </Link>
+                        </Link> */}
                     </div>
                 )}
 
