@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
+import RequestButton from "@/components/modules/travelPlan/RequestButton";
 import { BackButton } from "@/components/shared/BackButton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -20,6 +21,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 const DetailTravelPlanPage = async ({
     params,
@@ -29,6 +31,8 @@ const DetailTravelPlanPage = async ({
     const { id } = await params;
     const res = await getTravelPlanById(id);
     const currentUser = await getUserInfo();
+
+    console.log({ currentUser });
     // const plan = res.data
     const plan = res.data as ITravelPlan;
 
@@ -253,25 +257,21 @@ const DetailTravelPlanPage = async ({
                                         </Button>
                                     </Link>
                                 ) : (
-                                    <Button
-                                        className="w-full gradient-hero"
-                                        size="lg"
-                                        disabled={plan.maxTravelers === 0}
-                                    >
-                                        {plan.maxTravelers === 0 ? 'Trip Full' : 'Request to Join'}
-                                    </Button>
+                                    <RequestButton
+                                        isCurrentUser={!!currentUser} maxTravelersNumber={plan.maxTravelers}
+                                    />
                                 )}
 
                                 {!isOwner && (
                                     <>
                                         <Button variant="outline" className="w-full" size="lg"
                                         //  onClick={() => toast.success("This feature will add soon!")}
-                                            >
+                                        >
                                             <Mail className="w-4 h-4 mr-2" />
                                             Message Host
                                         </Button>
 
-                                        <Button variant="ghost" className="w-full" size="lg" 
+                                        <Button variant="ghost" className="w-full" size="lg"
                                         // onClick={() => toast.success("This feature will add soon!")}
                                         >
                                             <Heart className="w-4 h-4 mr-2" />
