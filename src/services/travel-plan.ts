@@ -118,15 +118,6 @@ export async function getMyTravelPlans() {
     }
 }
 
-// export async function updateTravelPlanAction(
-//     planId: string,
-//     prevState: any,
-//     formData: FormData
-// ): Promise<any> {
-
-// }
-
-
 export async function updateTravelPlanAction(
     planId: string,
     prevState: any,
@@ -217,9 +208,6 @@ export async function updateTravelPlanAction(
     }
 }
 
-
-
-
 export async function getTravelPlanById(id: string) {
     try {
         const response = await serverFetch.get(`/travelPlan/${id}`)
@@ -233,6 +221,7 @@ export async function getTravelPlanById(id: string) {
         };
     }
 }
+
 export async function deleteTravelPlan(id: string) {
     try {
         const response = await serverFetch.delete(`/travelPlan/${id}`)

@@ -8,11 +8,9 @@ const EditTravelPlanPage = async ({
     params: Promise<{ id: string }>
 }
 ) => {
-
     const { id } = await params
-    console.log({ id });
+    // console.log({ id });
     const res = await getTravelPlanById(id);
-
     const plan = res.data as ITravelPlan
 
     // console.log({ plan });

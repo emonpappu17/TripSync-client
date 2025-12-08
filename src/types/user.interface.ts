@@ -59,6 +59,7 @@ export interface ReviewRating {
 }
 
 export interface IUser {
+    id: string;
     fullName: string | null;
     profileImage: string | null;
     bio: string | null;
