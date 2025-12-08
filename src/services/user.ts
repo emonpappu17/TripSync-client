@@ -10,6 +10,7 @@ export async function updateUserProfile(_prevState: any, formData: FormData): Pr
     // -------------------
     // Parse arrays
     // -------------------
+    // console.log('formData.getAll("interests") ==>', formData.getAll("interests"));
     const interests = formData.getAll("interests") as string[];
     const visitedCountries = formData.getAll("visitedCountries") as string[];
 

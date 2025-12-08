@@ -7,18 +7,12 @@ import { Card } from '@/components/ui/card';
 import { calculateDuration, formatCurrency, formatDate } from '@/lib/utils';
 import { Calendar, MapPin, Plus, Users } from 'lucide-react';
 import Link from 'next/link';
-// import TravelPlanActions from '@/components/travel-plans/TravelPlanActions';
 import { getMyTravelPlans } from '@/services/travel-plan';
 import { ITravelPlan } from '@/types/travelPlan.interface';
 import TravelPlanActions from '@/components/modules/travelPlan/TravelPlanActions';
 import Image from 'next/image';
 
 export const dynamic = 'force-dynamic';
-
-// async function getMyTravelPlans() {
-//     const response = await getMyTravelPlans()
-//     return response.data || [];
-// }
 
 export default async function MyTravelPlansPage() {
     // await requireAuth();
