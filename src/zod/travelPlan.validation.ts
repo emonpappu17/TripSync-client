@@ -454,56 +454,216 @@ export const createTravelPlanZodSchema = z
 
 
 // For update operations - all fields optional except those that shouldn't change
+// export const updateTravelPlanZodSchema = z
+//     .object({
+//         title: z.string().min(3, "Title must be at least 3 characters").optional(),
+//         description: z.string().optional(),
+//         destination: z.string().min(2, "Destination must be at least 2 characters").optional(),
+//         country: z.string().optional(),
+
+//         startDate: z
+//             .string()
+//             .refine(
+//                 (val) => {
+//                     if (!val) return true;
+//                     const d = new Date(val);
+//                     return !isNaN(d.getTime());
+//                 },
+//                 { message: "Start date must be a valid date" }
+//             )
+//             .optional(),
+
+//         endDate: z
+//             .string()
+//             .refine(
+//                 (val) => {
+//                     if (!val) return true;
+//                     const d = new Date(val);
+//                     return !isNaN(d.getTime());
+//                 },
+//                 { message: "End date must be a valid date" }
+//             )
+//             .optional(),
+
+//         budgetMin: z
+//             .string()
+//             .optional()
+//             .transform((val) => (val === "" || val === undefined ? undefined : Number(val)))
+//             .pipe(z.number().min(0).optional()),
+
+//         budgetMax: z
+//             .string()
+//             .optional()
+//             .transform((val) => (val === "" || val === undefined ? undefined : Number(val)))
+//             .pipe(z.number().min(0).optional()),
+
+//         travelType: TravelTypeEnum.optional(),
+
+//         maxTravelers: z
+//             .string()
+//             .optional()
+//             .transform((val) => (val === "" || val === undefined ? undefined : Number(val)))
+//             .pipe(z.number().int().positive().optional()),
+
+//         isPublic: z
+//             .string()
+//             .or(z.boolean())
+//             .transform((val) => {
+//                 if (typeof val === "boolean") return val;
+//                 return val === "true";
+//             })
+//             .pipe(z.boolean())
+//             .optional(),
+
+//         image: z
+//             .instanceof(File)
+//             .refine((file) => file.size <= 3 * 1024 * 1024, {
+//                 message: "Image must be smaller than 3MB"
+//             })
+//             .optional()
+//             .or(z.null()),
+
+//         activities: z
+//             .string()
+//             .optional()
+//             .transform((val) => {
+//                 if (!val || val === "") return undefined;
+//                 try {
+//                     return JSON.parse(val);
+//                 } catch {
+//                     return undefined;
+//                 }
+//             })
+//             .pipe(z.array(z.string()).optional()),
+//     })
+//     .refine(
+//         (data) => {
+//             if (!data.startDate || !data.endDate) return true;
+//             return new Date(data.endDate) > new Date(data.startDate);
+//         },
+//         {
+//             path: ["endDate"],
+//             message: "End date must be after start date"
+//         }
+//     );
+
+// export type CreateTravelPlanInput = z.infer<typeof createTravelPlanZodSchema>;
+// export type UpdateTravelPlanInput = z.infer<typeof updateTravelPlanZodSchema>;
+
+
+
 export const updateTravelPlanZodSchema = z
     .object({
-        title: z.string().min(3, "Title must be at least 3 characters").optional(),
-        description: z.string().optional(),
-        destination: z.string().min(2, "Destination must be at least 2 characters").optional(),
-        country: z.string().optional(),
+        title: z
+            .string()
+            .min(3, "Trip title must be at least 3 characters")
+            .max(100, "Trip title must not exceed 100 characters")
+            .optional(),
 
+        description: z
+            .string()
+            .min(10, "Description should be at least 10 characters")
+            .max(1000, "Description is too long. Please keep it under 1000 characters")
+            .optional(),
+
+        destination: z
+            .string()
+            .min(2, "Destination name must be at least 2 characters")
+            .max(100, "Destination name is too long")
+            .optional(),
+
+        country: z
+            .string()
+            .min(2, "Country name must be at least 2 characters")
+            .max(100, "Country name is too long")
+            .optional(),
+
+        // Dates: optional, still transform string → Date
         startDate: z
             .string()
+            .refine((val) => !isNaN(new Date(val).getTime()), {
+                message: "Please enter a valid start date",
+            })
+            .transform((val) => new Date(val))
             .refine(
-                (val) => {
-                    if (!val) return true;
-                    const d = new Date(val);
-                    return !isNaN(d.getTime());
+                (date) => {
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    return date >= today;
                 },
-                { message: "Start date must be a valid date" }
+                { message: "Start date cannot be in the past" }
             )
             .optional(),
 
         endDate: z
             .string()
+            .refine((val) => !isNaN(new Date(val).getTime()), {
+                message: "Please enter a valid end date",
+            })
+            .transform((val) => new Date(val))
             .refine(
-                (val) => {
-                    if (!val) return true;
-                    const d = new Date(val);
-                    return !isNaN(d.getTime());
+                (date) => {
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    return date >= today;
                 },
-                { message: "End date must be a valid date" }
+                { message: "End date cannot be in the past" }
             )
             .optional(),
 
         budgetMin: z
-            .string()
-            .optional()
-            .transform((val) => (val === "" || val === undefined ? undefined : Number(val)))
-            .pipe(z.number().min(0).optional()),
+            .number()
+            .transform((val) => {
+                const num = Number(val);
+                if (isNaN(num)) throw new Error("Minimum budget must be a valid number");
+                return num;
+            })
+            .pipe(
+                z
+                    .number()
+                    .min(1, "Minimum budget must be at least $1")
+                    .max(1000000, "Budget seems unrealistic. Please enter a reasonable amount")
+            )
+            .optional(),
 
         budgetMax: z
-            .string()
-            .optional()
-            .transform((val) => (val === "" || val === undefined ? undefined : Number(val)))
-            .pipe(z.number().min(0).optional()),
+            .number()
+            .transform((val) => {
+                const num = Number(val);
+                if (isNaN(num)) throw new Error("Maximum budget must be a valid number");
+                return num;
+            })
+            .pipe(
+                z
+                    .number()
+                    .min(1, "Maximum budget must be at least $1")
+                    .max(1000000, "Budget seems unrealistic. Please enter a reasonable amount")
+            )
+            .optional(),
 
-        travelType: TravelTypeEnum.optional(),
+        travelType: z
+            .string()
+            .refine((val) => ["SOLO", "FAMILY", "COUPLE", "FRIENDS"].includes(val), {
+                message: "Please select a valid travel type (Solo, Family, Couple, or Friends)",
+            })
+            .transform((val) => val as "SOLO" | "FAMILY" | "COUPLE" | "FRIENDS")
+            .optional(),
 
         maxTravelers: z
-            .string()
-            .optional()
-            .transform((val) => (val === "" || val === undefined ? undefined : Number(val)))
-            .pipe(z.number().int().positive().optional()),
+            .number()
+            .transform((val) => {
+                const num = Number(val);
+                if (isNaN(num)) throw new Error("Maximum travelers must be a valid number");
+                return num;
+            })
+            .pipe(
+                z
+                    .number()
+                    .int("Number of travelers must be a whole number")
+                    .min(1, "There must be at least 1 traveler")
+                    .max(50, "Maximum travelers cannot exceed 50 people")
+            )
+            .optional(),
 
         isPublic: z
             .string()
@@ -517,35 +677,77 @@ export const updateTravelPlanZodSchema = z
 
         image: z
             .instanceof(File)
-            .refine((file) => file.size <= 3 * 1024 * 1024, {
-                message: "Image must be smaller than 3MB"
-            })
-            .optional()
-            .or(z.null()),
+            // .refine((file) => file.size > 0, {
+            //     message: "Please select an image file",
+            // })
+            // .refine((file) => file.size <= 3 * 1024 * 1024, {
+            //     message: "Image is too large. Please choose an image smaller than 3MB",
+            // })
+            // .refine(
+            //     (file) =>
+            //         ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/gif"].includes(
+            //             file.type
+            //         ),
+            //     { message: "Invalid image format. Please upload a JPEG, PNG, WEBP, or GIF image" }
+            // )
+            .optional(),
 
         activities: z
-            .string()
-            .optional()
-            .transform((val) => {
-                if (!val || val === "") return undefined;
-                try {
-                    return JSON.parse(val);
-                } catch {
-                    return undefined;
-                }
-            })
-            .pipe(z.array(z.string()).optional()),
+            .array(z.string().trim().min(1, "activities cannot be empty"))
+            .optional(),
     })
+    // Cross-field refinements only if both dates are provided
     .refine(
         (data) => {
-            if (!data.startDate || !data.endDate) return true;
-            return new Date(data.endDate) > new Date(data.startDate);
+            if (data.startDate && data.endDate) {
+                return data.endDate > data.startDate;
+            }
+            return true;
         },
         {
             path: ["endDate"],
-            message: "End date must be after start date"
+            message:
+                "Your trip must end after it starts! Please select an end date that comes after the start date",
+        }
+    )
+    .refine(
+        (data) => {
+            if (data.startDate && data.endDate) {
+                const diffTime = Math.abs(data.endDate.getTime() - data.startDate.getTime());
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                return diffDays <= 365;
+            }
+            return true;
+        },
+        {
+            path: ["endDate"],
+            message: "Trip duration cannot exceed 1 year. Please adjust your dates",
+        }
+    )
+    .refine(
+        (data) => {
+            if (data.budgetMin !== undefined && data.budgetMax !== undefined) {
+                return data.budgetMax >= data.budgetMin;
+            }
+            return true;
+        },
+        {
+            path: ["budgetMax"],
+            message: "Maximum budget must be greater than or equal to minimum budget",
+        }
+    )
+    .refine(
+        (data) => {
+            if (data.budgetMin !== undefined && data.budgetMax !== undefined) {
+                const difference = data.budgetMax - data.budgetMin;
+                const percentDiff = (difference / data.budgetMin) * 100;
+                return percentDiff >= 10 || difference === 0;
+            }
+            return true;
+        },
+        {
+            path: ["budgetMax"],
+            message:
+                "Budget range is too narrow. Maximum should be at least 10% more than minimum for flexibility",
         }
     );
-
-export type CreateTravelPlanInput = z.infer<typeof createTravelPlanZodSchema>;
-export type UpdateTravelPlanInput = z.infer<typeof updateTravelPlanZodSchema>;

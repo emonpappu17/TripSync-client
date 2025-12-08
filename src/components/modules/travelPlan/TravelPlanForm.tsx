@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { createTravelPlanAction, updateTravelPlanAction } from "@/services/travel-plan";
+import { ITravelPlan } from "@/types/travelPlan.interface";
 import { Activity, Calendar, DollarSign, Globe, ImageIcon, UploadCloud, X } from "lucide-react";
 import Image from "next/image";
 import { redirect } from "next/navigation";
@@ -24,7 +25,7 @@ const TRAVEL_TYPES = ["SOLO", "FAMILY", "COUPLE", "FRIENDS"] as const;
 
 interface TravelPlanFormProps {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    plan?: any;
+    plan?: ITravelPlan;
 }
 
 export default function TravelPlanForm({ plan }: TravelPlanFormProps) {
