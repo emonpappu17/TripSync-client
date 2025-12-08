@@ -221,6 +221,20 @@ export async function getTravelPlanById(id: string) {
         };
     }
 }
+
+export async function getAllTravelPlans(params :any) {
+    try {
+        const response = await serverFetch.get(`/travelPlan?${params.toString()}`)
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        };
+    }
+}
 export async function getTravelPlanByUserId(id: string) {
     try {
         const response = await serverFetch.get(`/travelPlan/user/${id}`)
