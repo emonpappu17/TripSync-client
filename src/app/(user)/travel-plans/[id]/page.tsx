@@ -259,6 +259,7 @@ const DetailTravelPlanPage = async ({
                                 ) : (
                                     <RequestButton
                                         isCurrentUser={!!currentUser} maxTravelersNumber={plan.maxTravelers}
+                                        travelPlanId={plan.id}
                                     />
                                 )}
 
