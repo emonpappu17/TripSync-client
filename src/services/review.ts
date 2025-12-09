@@ -81,3 +81,19 @@ export async function updateReview(reviewId: string,
         };
     }
 }
+
+export async function deleteReview(id: string) {
+    try {
+        // console.log({ planId, message });
+        const response = await serverFetch.delete(`/review/${id}`)
+        // return response
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        };
+    }
+}
