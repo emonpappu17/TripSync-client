@@ -51,7 +51,7 @@ async function getSentRequestsData(searchParams: any) {
     return response;
 }
 
-function getStatusColor(status: string) {
+export function getStatusColor(status: string) {
     switch (status) {
         case 'PENDING':
             return 'bg-yellow-100 text-yellow-800 border-yellow-200';
