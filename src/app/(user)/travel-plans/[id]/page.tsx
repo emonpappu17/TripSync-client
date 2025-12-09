@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/no-unescaped-entities */
 import RequestButton from "@/components/modules/travelPlan/RequestButton";
 import { BackButton } from "@/components/shared/BackButton";
@@ -21,7 +22,6 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 
 const DetailTravelPlanPage = async ({
     params,
@@ -32,13 +32,22 @@ const DetailTravelPlanPage = async ({
     const res = await getTravelPlanById(id);
     const currentUser = await getUserInfo();
 
-    console.log({ currentUser });
+    // console.log({ currentUser });
     // const plan = res.data
-    const plan = res.data as ITravelPlan;
+    const plan = res.data;
+
+    console.log({ plan });
 
     // Check if current user is the plan owner by comparing IDs
     // const isOwner = false;
     const isOwner = currentUser?.id === plan.userId;
+
+    // ✅ Check if current user has already requested this plan
+    const isRequested = plan.requests.some(
+        (req: any) => req.requesterId === currentUser?.id
+    );
+
+    console.log({ isRequested });
 
     // Get plan owner data from nested user object
     const planOwner = plan.user;
@@ -260,6 +269,7 @@ const DetailTravelPlanPage = async ({
                                     <RequestButton
                                         isCurrentUser={!!currentUser} maxTravelersNumber={plan.maxTravelers}
                                         travelPlanId={plan.id}
+                                        isRequested={isRequested}
                                     />
                                 )}
 

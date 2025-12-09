@@ -76,7 +76,7 @@ export default function TravelPlanCard({
             )}
         >
             {/* ✅ Image Section */}
-            <div className="relative w-full aspect-[16/9] overflow-hidden bg-amber-700">
+            <div className="relative w-full aspect-video overflow-hidden">
                 <Image
                     src={plan.image || "/placeholder-travel.jpg"}
                     alt={plan.destination}

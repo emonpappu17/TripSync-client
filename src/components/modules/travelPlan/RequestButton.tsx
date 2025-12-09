@@ -133,17 +133,20 @@ import {
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner"; // Or your preferred toast library import
+import { createRequest } from "@/services/travelRequest";
 
 interface RequestButtonProps {
     travelPlanId: string;
     maxTravelersNumber: number;
     isCurrentUser: boolean;
+    isRequested: boolean;
 }
 
 const RequestButton = ({
     travelPlanId,
     maxTravelersNumber,
-    isCurrentUser
+    isCurrentUser,
+    isRequested
 }: RequestButtonProps) => {
     const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
@@ -151,6 +154,7 @@ const RequestButton = ({
     const [loading, setLoading] = useState(false);
 
     const handleInitialClick = () => {
+        if (isRequested) return
         if (!isCurrentUser) {
             // Store the current URL to redirect back after login if needed
             // const currentPath = window.location.pathname;
@@ -174,30 +178,27 @@ const RequestButton = ({
             // REPLACE THIS WITH YOUR ACTUAL API SERVICE CALL
             // Example: await createTravelRequest(travelPlanId, message);
             // ---------------------------------------------------------
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/travel-requests`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    // Authorization: `Bearer ${accessToken}` // Ensure you handle auth
-                },
-                body: JSON.stringify({
-                    travelPlanId: travelPlanId,
-                    message: message,
-                }),
-            });
+            // console.log({ travelPlanId, message });
+            const response = await createRequest(travelPlanId, message)
 
-            if (!response.ok) {
-                throw new Error("Failed to send request");
+            // console.log({ response });
+
+            if (!response.success) {
+                toast.error(response.message || "Failed to send request");
+                return
             }
+            // if (!response.ok) {
+            //     throw new Error("Failed to send request");
+            // }
 
             // Success logic
             toast.success("Request sent successfully!");
             setIsOpen(false);
             setMessage("");
-
+            router.refresh();
         } catch (error: any) {
             console.error(error);
-            toast.error("Something went wrong. Please try again.");
+            toast.error(error.message || "Something went wrong. Please try again.");
         } finally {
             setLoading(false);
         }
@@ -205,14 +206,28 @@ const RequestButton = ({
 
     return (
         <>
-            <Button
+            {/* <Button
                 className="w-full gradient-hero"
                 size="lg"
                 disabled={maxTravelersNumber === 0}
                 onClick={handleInitialClick}
             >
-                {maxTravelersNumber === 0 ? 'Trip Full' : 'Request to Join'}
+                {isRequested && 'Requested' || maxTravelersNumber === 0 ? 'Trip Full' : 'Request to Join'}
+            </Button> */}
+
+            <Button
+                className="w-full gradient-hero"
+                size="lg"
+                disabled={maxTravelersNumber === 0 || isRequested}
+                onClick={handleInitialClick}
+            >
+                {isRequested
+                    ? "Requested"
+                    : maxTravelersNumber === 0
+                        ? "Trip Full"
+                        : "Request to Join"}
             </Button>
+
 
             <Dialog open={isOpen} onOpenChange={setIsOpen} >
                 <DialogContent className="sm:max-w-[425px] p-5" >
