@@ -3,20 +3,20 @@
 
 // import { requireAuth } from '@/lib/server/auth';
 // import { serverFetch } from '@/lib/server/api';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { CancelRequestButton } from '@/components/modules/travelRequest/CancelRequestButton';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Card, CardContent } from '@/components/ui/card';
+import { getSentRequests } from '@/services/travelRequest';
 import {
     Calendar,
-    MapPin,
     Clock,
-    Send,
     Eye,
-    X
+    MapPin,
+    Send
 } from 'lucide-react';
 import Link from 'next/link';
-import { serverFetch } from '@/lib/server-fetch';
 // import { CancelRequestButton } from '@/components/requests/CancelRequestButton';
 
 export const dynamic = 'force-dynamic';
@@ -40,13 +40,14 @@ interface SentRequest {
     };
 }
 
-async function getSentRequests(searchParams: any) {
+async function getSentRequestsData(searchParams: any) {
     const params = new URLSearchParams();
     if (searchParams.status) params.set('status', searchParams.status);
     if (searchParams.page) params.set('page', searchParams.page);
     params.set('limit', '10');
 
-    const response = await serverFetch.get(`/travel-requests/sent?${params.toString()}`);
+    const response = await getSentRequests(params);
+    // const response = await serverFetch.get(`/travel-requests/sent?${params.toString()}`);
     return response;
 }
 
@@ -68,13 +69,17 @@ function getStatusColor(status: string) {
 export default async function SentRequestsPage({
     searchParams,
 }: {
-    searchParams: any;
+    searchParams: Promise<any>;
 }) {
     // await requireAuth();
-    const { data: requests, meta } = await getSentRequests(searchParams);
+    const params = (await searchParams) || {}
+
+    const { data: requests, meta } = await getSentRequestsData(params);
+
+    console.log({ meta });
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 container mx-auto px-4 max-w-6xl mb-24 mt-14">
             {/* Header */}
             <div>
                 <h1 className="text-3xl font-bold mb-2">Sent Requests</h1>
@@ -84,10 +89,10 @@ export default async function SentRequestsPage({
             </div>
 
             {/* Filter Tabs */}
-            <div className="flex gap-2 border-b">
+            <div className="flex gap-2 border-b pb-4">
                 <Link href="/requests/sent">
                     <Button
-                        variant={!searchParams.status ? 'default' : 'ghost'}
+                        variant={!params.status ? 'default' : 'ghost'}
                         size="sm"
                     >
                         All ({meta?.total || 0})
@@ -95,7 +100,7 @@ export default async function SentRequestsPage({
                 </Link>
                 <Link href="/requests/sent?status=PENDING">
                     <Button
-                        variant={searchParams.status === 'PENDING' ? 'default' : 'ghost'}
+                        variant={params.status === 'PENDING' ? 'default' : 'ghost'}
                         size="sm"
                     >
                         Pending
@@ -103,7 +108,7 @@ export default async function SentRequestsPage({
                 </Link>
                 <Link href="/requests/sent?status=ACCEPTED">
                     <Button
-                        variant={searchParams.status === 'ACCEPTED' ? 'default' : 'ghost'}
+                        variant={params.status === 'ACCEPTED' ? 'default' : 'ghost'}
                         size="sm"
                     >
                         Accepted
@@ -111,7 +116,7 @@ export default async function SentRequestsPage({
                 </Link>
                 <Link href="/requests/sent?status=REJECTED">
                     <Button
-                        variant={searchParams.status === 'REJECTED' ? 'default' : 'ghost'}
+                        variant={params.status === 'REJECTED' ? 'default' : 'ghost'}
                         size="sm"
                     >
                         Rejected
@@ -140,7 +145,7 @@ export default async function SentRequestsPage({
                             <CardContent className="p-6">
                                 <div className="flex gap-4">
                                     {/* Host Avatar */}
-                                    <Link href={`/profile/${request.receiver}`}>
+                                    {/* <Link href={`/profile/${request.receiver}`}>
                                         <Avatar className="w-16 h-16 ring-2 ring-primary/10">
                                             <AvatarImage
                                                 src={request.receiver.profileImage}
@@ -150,7 +155,16 @@ export default async function SentRequestsPage({
                                                 {request.receiver.fullName[0]}
                                             </AvatarFallback>
                                         </Avatar>
-                                    </Link>
+                                    </Link> */}
+                                    <Avatar className="w-16 h-16 ring-2 ring-primary/10">
+                                        <AvatarImage
+                                            src={request.receiver.profileImage}
+                                            alt={request.receiver.fullName}
+                                        />
+                                        <AvatarFallback>
+                                            {request.receiver.fullName[0]}
+                                        </AvatarFallback>
+                                    </Avatar>
 
                                     {/* Content */}
                                     <div className="flex-1 space-y-3">
@@ -222,9 +236,9 @@ export default async function SentRequestsPage({
                                                 </Button>
                                             </Link>
 
-                                            {/* {request.status === 'PENDING' && (
+                                            {request.status === 'PENDING' && (
                                                 <CancelRequestButton requestId={request.id} />
-                                            )} */}
+                                            )}
                                         </div>
                                     </div>
                                 </div>

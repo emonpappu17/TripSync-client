@@ -29,7 +29,7 @@ export async function createRequest(planId: string, message: string) {
 export async function getSentRequests(params?: any) {
     try {
         // console.log({ planId, message });
-        const response = await serverFetch.get(`/travelRequest/sent/${params}`)
+        const response = await serverFetch.get(`/travelRequest/sent?${params.toString()}`)
         // return response
         const result = await response.json();
         return result;

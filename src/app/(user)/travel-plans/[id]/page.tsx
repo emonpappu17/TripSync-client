@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { getUserInfo } from "@/services/auth/getUserInfo";
 import { getTravelPlanById } from "@/services/travel-plan";
-import { ITravelPlan } from "@/types/travelPlan.interface";
 import {
     Calendar,
     DollarSign,
@@ -44,7 +43,8 @@ const DetailTravelPlanPage = async ({
 
     // ✅ Check if current user has already requested this plan
     const isRequested = plan.requests.some(
-        (req: any) => req.requesterId === currentUser?.id
+        (req: any) => req.requesterId === currentUser?.id && req.status !== 'CANCELLED'
+        // || req.requesterId === currentUser?.id && req.status
     );
 
     console.log({ isRequested });
@@ -162,7 +162,7 @@ const DetailTravelPlanPage = async ({
                             <Card className="p-6">
                                 <h2 className="text-xl font-bold mb-4">Planned Activities</h2>
                                 <div className="flex flex-wrap gap-2">
-                                    {plan.activities.map((activity, index) => (
+                                    {plan.activities.map((activity: any, index: any) => (
                                         <Badge
                                             key={`${activity}-${index}`}
                                             variant="secondary"
@@ -180,7 +180,7 @@ const DetailTravelPlanPage = async ({
                             <Card className="p-6">
                                 <h2 className="text-xl font-bold mb-4">Host's Interests</h2>
                                 <div className="flex flex-wrap gap-2">
-                                    {planOwner.interests.map((interest, index) => (
+                                    {planOwner.interests.map((interest: any, index: any) => (
                                         <Badge
                                             key={`${interest}-${index}`}
                                             variant="outline"
