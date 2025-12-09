@@ -2,6 +2,34 @@
 "use server"
 import { serverFetch } from "@/lib/server-fetch";
 
+export async function createReview(data: {
+    toReviewerId: string;
+    travelPlanId?: string;
+    rating: number;
+    comment: string;
+    isPublic?: boolean;
+}) {
+     try {
+        // console.log({ planId, message });
+        const response = await serverFetch.post(`/review`, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        };
+    }
+}
+
+
 export async function getMyReviews() {
     try {
         const response = await serverFetch.get(`/review/my-reviews`)
