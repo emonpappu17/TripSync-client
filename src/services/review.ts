@@ -29,7 +29,6 @@ export async function createReview(data: {
     }
 }
 
-
 export async function getMyReviews() {
     try {
         const response = await serverFetch.get(`/review/my-reviews`)
