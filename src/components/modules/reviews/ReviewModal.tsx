@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { useState } from 'react';
 import {
     Dialog,
     DialogContent,
@@ -11,8 +10,8 @@ import {
 } from '@/components/ui/dialog';
 // import { ReviewForm } from './ReviewForm';
 import { createReview, updateReview } from '@/services/review';
-import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 import { ReviewForm } from './ReviewForm';
 // import { IReview } from '@/types/review.interface';
 
@@ -64,7 +63,7 @@ export function ReviewModal({
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-[500px]">
+            <DialogContent className="sm:max-w-[500px] p-10">
                 <DialogHeader>
                     <DialogTitle>
                         {existingReview ? 'Edit Review' : 'Write a Review'}

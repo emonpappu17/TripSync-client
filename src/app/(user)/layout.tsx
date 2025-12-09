@@ -11,7 +11,8 @@ export default async function Layout({
 
     return (
         <main>
-            <Navbar role={user?.role}></Navbar>
+            <Navbar user={user}></Navbar>
+            {/* <Navbar role={user?.role}></Navbar> */}
             {children}
             <Footer></Footer>
         </main>

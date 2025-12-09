@@ -64,7 +64,7 @@ export async function updateReview(reviewId: string,
         isPublic?: boolean;
     }) {
     try {
-        const response = await serverFetch.get(`/review/${reviewId}`, {
+        const response = await serverFetch.patch(`/review/${reviewId}`, {
             headers: {
                 "Content-Type": "application/json",
             },

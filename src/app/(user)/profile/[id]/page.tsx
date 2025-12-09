@@ -1,14 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ProfileCard from '@/components/modules/profile/ProfileCard';
+import { ReviewList } from '@/components/modules/reviews/ReviewList';
+import { ReviewStats } from '@/components/modules/reviews/ReviewStats';
+import { WriteReviewButton } from '@/components/modules/reviews/WriteReviewButton';
 import { BackButton } from '@/components/shared/BackButton';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Card } from '@/components/ui/card';
-import { getUserReviews } from '@/services/review';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { getUserInfo } from '@/services/auth/getUserInfo';
+import { getUserReviews} from '@/services/review';
 import { getTravelPlanByUserId } from '@/services/travel-plan';
 import { getUsrById } from '@/services/user';
 import { IUser } from '@/types/user.interface';
-import { Award, Calendar, Star, Users } from 'lucide-react';
+import { Calendar, Eye, Users } from 'lucide-react';
 import Link from 'next/link';
 const DetailProfilePage = async ({
     params,
@@ -22,6 +26,7 @@ const DetailProfilePage = async ({
     const userReviews = await getUserReviews(id);
 
     console.log({ profileUser, userPlans, userReviews });
+    const currentUser = await getUserInfo();
 
     return (
         <div className="min-h-screen py-8">
@@ -81,7 +86,7 @@ const DetailProfilePage = async ({
                         </div>
 
                         {/* Reviews */}
-                        <div>
+                        {/* <div>
                             <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
                                 <Award className="w-6 h-6 text-primary" />
                                 Reviews ({userReviews?.data?.length})
@@ -119,7 +124,86 @@ const DetailProfilePage = async ({
                                     <p className="text-muted-foreground">No reviews yet</p>
                                 </Card>
                             )}
-                        </div>
+                        </div> */}
+
+
+                        <Card>
+                            <CardHeader className="flex flex-row items-center justify-between">
+                                <div>
+                                    <CardTitle>Reviews & Ratings</CardTitle>
+                                </div>
+                                <div className="flex gap-2">
+                                    {/* {!isOwnProfile && (
+                                        <WriteReviewButton
+                                            toUserId={id}
+                                            toUserName={profileUser.fullName}
+                                            variant="outline"
+                                            size="sm"
+                                        />
+                                    )} */}
+                                    <WriteReviewButton
+                                        toUserId={id}
+                                        toUserName={profileUser.fullName}
+                                        variant="outline"
+                                        size="sm"
+                                    />
+                                    {userReviews?.meta.total > 0 && (
+                                        <Link href={`/reviews/${id}`}>
+                                            <Button variant="outline" size="sm">
+                                                <Eye className="w-4 h-4 mr-2" />
+                                                View All ({userReviews?.meta.total})
+                                            </Button>
+                                        </Link>
+                                    )}
+                                </div>
+                            </CardHeader>
+                            <CardContent className="space-y-6">
+                                {/* Stats */}
+                                <ReviewStats
+                                    averageRating={userReviews?.meta.averageRating}
+                                    totalReviews={userReviews?.meta.total}
+                                />
+
+                                {/* Recent Reviews */}
+                                {userReviews?.data.length > 0 ? (
+                                    <>
+                                        <div>
+                                            <h3 className="font-semibold mb-4">Recent Reviews</h3>
+                                            <ReviewList
+                                                reviews={userReviews?.data}
+                                                currentUserId={currentUser.id}
+                                                canEdit={false}
+                                            />
+                                        </div>
+                                        {userReviews?.meta.total > 5 && (
+                                            <div className="text-center pt-4">
+                                                <Link href={`/reviews/${id}`}>
+                                                    <Button variant="outline">
+                                                        View All {userReviews?.meta.total} Reviews
+                                                    </Button>
+                                                </Link>
+                                            </div>
+                                        )}
+                                    </>
+                                ) : (
+                                    <div className="text-center py-8">
+                                        <p className="text-muted-foreground mb-4">
+                                            No reviews yet
+                                        </p>
+                                        {/* {!isOwnProfile && (
+                                            <WriteReviewButton
+                                                toUserId={id}
+                                                toUserName={profile.fullName}
+                                            />
+                                        )} */}
+                                        <WriteReviewButton
+                                            toUserId={id}
+                                            toUserName={profileUser?.data.fullName}
+                                        />
+                                    </div>
+                                )}
+                            </CardContent>
+                        </Card>
                     </div>
                 </div>
             </div>

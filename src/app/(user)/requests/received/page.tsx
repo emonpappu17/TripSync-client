@@ -111,7 +111,7 @@ export default async function ReceivedRequestsPage({
             </div>
 
             {/* Requests List */}
-            {requests.length === 0 ? (
+            {requests?.length === 0 ? (
                 <Card>
                     <CardContent className="flex flex-col items-center justify-center py-12">
                         <Inbox className="w-16 h-16 text-muted-foreground mb-4" />
@@ -126,7 +126,7 @@ export default async function ReceivedRequestsPage({
                 </Card>
             ) : (
                 <div className="space-y-4">
-                    {requests.map((request: ReceivedRequest) => (
+                    {requests?.map((request: ReceivedRequest) => (
                         <Card key={request.id} className="hover:shadow-md transition-shadow">
                             <CardContent className="p-6">
                                 <div className="flex gap-4">
