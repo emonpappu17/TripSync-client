@@ -1,122 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/no-unescaped-entities */
-// "use client";
-
-// import { Button } from '@/components/ui/button';
-// import { redirect } from 'next/navigation';
-
-// const RequestButton = ({ maxTravelersNumber, isCurrentUser }: { maxTravelersNumber: number, isCurrentUser: boolean }) => {
-//     return (
-
-//         <Button
-//             className="w-full gradient-hero"
-//             size="lg"
-//             disabled={maxTravelersNumber === 0}
-//             onClick={() => {
-//                 if (!isCurrentUser) {
-//                     redirect("/login")
-//                 }
-//             }}
-//         >
-//             {maxTravelersNumber === 0 ? 'Trip Full' : 'Request to Join'}
-//         </Button>
-
-//     );
-// };
-
-// export default RequestButton;
-
-
-
-// "use client";
-
-// import { useState } from "react";
-// import { Button } from "@/components/ui/button";
-// import { redirect } from "next/navigation";
-// import {
-//     Dialog,
-//     DialogContent,
-//     DialogHeader,
-//     DialogTitle,
-//     DialogFooter,
-// } from "@/components/ui/dialog";
-// import { Textarea } from "@/components/ui/textarea";
-
-// const RequestButton = ({
-//     maxTravelersNumber,
-//     isCurrentUser,
-// }: {
-//     maxTravelersNumber: number;
-//     isCurrentUser: boolean;
-// }) => {
-//     const [open, setOpen] = useState(false);
-//     const [message, setMessage] = useState("");
-
-//     const handleClick = () => {
-//         if (!isCurrentUser) {
-//             redirect("/login");
-//             return;
-//         }
-
-//         if (maxTravelersNumber === 0) return;
-
-//         setOpen(true);
-//     };
-
-//     const handleSubmit = async () => {
-//         if (!message.trim()) return;
-
-//         // ✅ TODO: Send this to your API
-//         console.log("Request Message:", message);
-
-//         setMessage("");
-//         setOpen(false);
-//     };
-
-//     return (
-//         <>
-//             {/* ✅ MAIN BUTTON */}
-//             <Button
-//                 className="w-full gradient-hero"
-//                 size="lg"
-//                 disabled={maxTravelersNumber === 0}
-//                 onClick={handleClick}
-//             >
-//                 {maxTravelersNumber === 0 ? "Trip Full" : "Request to Join"}
-//             </Button>
-
-//             {/* ✅ MODAL / DIALOG */}
-//             <Dialog open={open} onOpenChange={setOpen} >
-//                 <DialogContent>
-//                     <DialogHeader>
-//                         <DialogTitle>Send Request Message</DialogTitle>
-//                     </DialogHeader>
-
-//                     {/* ✅ MESSAGE INPUT */}
-//                     <Textarea
-//                         placeholder="Write a short message to the host..."
-//                         value={message}
-//                         onChange={(e) => setMessage(e.target.value)}
-//                         className="min-h-[120px]"
-//                     />
-
-//                     <DialogFooter>
-//                         <Button variant="outline" onClick={() => setOpen(false)}>
-//                             Cancel
-//                         </Button>
-//                         <Button onClick={handleSubmit} disabled={!message.trim()}>
-//                             Send Request
-//                         </Button>
-//                     </DialogFooter>
-//                 </DialogContent>
-//             </Dialog>
-//         </>
-//     );
-// };
-
-// export default RequestButton;
-
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState } from "react";
@@ -140,13 +23,15 @@ interface RequestButtonProps {
     maxTravelersNumber: number;
     isCurrentUser: boolean;
     isRequested: boolean;
+    acceptedCount: number;
 }
 
 const RequestButton = ({
     travelPlanId,
     maxTravelersNumber,
     isCurrentUser,
-    isRequested
+    isRequested,
+    acceptedCount
 }: RequestButtonProps) => {
     const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
@@ -223,7 +108,7 @@ const RequestButton = ({
             >
                 {isRequested
                     ? "Requested"
-                    : maxTravelersNumber === 0
+                    : (maxTravelersNumber - acceptedCount) === 0
                         ? "Trip Full"
                         : "Request to Join"}
             </Button>

@@ -43,9 +43,16 @@ const DetailTravelPlanPage = async ({
 
     // ✅ Check if current user has already requested this plan
     const isRequested = plan.requests.some(
-        (req: any) => req.requesterId === currentUser?.id && req.status !== 'CANCELLED'
+        (req: any) => req.requesterId === currentUser?.id
+        // (req: any) => req.requesterId === currentUser?.id && req.status !== 'CANCELLED'
         // || req.requesterId === currentUser?.id && req.status
     );
+
+    const acceptedCount = plan.requests.filter(
+        (req: any) => req.status === "ACCEPTED"
+    ).length;
+
+    console.log({ acceptedCount });
 
     console.log({ isRequested });
 
@@ -238,7 +245,7 @@ const DetailTravelPlanPage = async ({
                                     <div>
                                         <p className="font-medium">Spots Available</p>
                                         <p className="text-sm text-muted-foreground">
-                                            {plan.maxTravelers} {plan.maxTravelers === 1 ? 'spot' : 'spots'} left
+                                            {(plan.maxTravelers - acceptedCount)} {plan.maxTravelers - acceptedCount === 1 ? 'spot' : 'spots'} left
                                         </p>
                                     </div>
                                 </div>
@@ -267,6 +274,7 @@ const DetailTravelPlanPage = async ({
                                     </Link>
                                 ) : (
                                     <RequestButton
+                                        acceptedCount={acceptedCount}
                                         isCurrentUser={!!currentUser} maxTravelersNumber={plan.maxTravelers}
                                         travelPlanId={plan.id}
                                         isRequested={isRequested}

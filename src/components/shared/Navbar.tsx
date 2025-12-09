@@ -123,6 +123,8 @@ const Navbar = ({ role }: { role: string }) => {
         { title: 'My Plans', href: '/travel-plans' },
         { title: 'Profile', href: '/profile' },
         { title: 'Dashboard', href: '/dashboard' },
+        { title: 'Request Sent', href: '/requests/sent' },
+        { title: 'Request Received', href: '/requests/received' },
     ] : [
         { title: 'Home', href: '/' },
         { title: 'Explore', href: '/explore' },
