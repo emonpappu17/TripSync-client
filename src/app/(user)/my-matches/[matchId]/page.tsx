@@ -8,8 +8,9 @@ import { calculateDuration, formatDate } from '@/lib/utils';
 import { Calendar, MapPin, Users, Mail, MessageCircle, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 import { getMatchById } from '@/services/travel-match';
+import { DeactivateMatchButton } from '@/components/modules/travelPlan/DeactivateMatchButton';
 // import { ITravelMatch } from '@/types/travelMatch.interface';
-import { DeactivateMatchButton } from '@/components/modules/travelMatch/DeactivateMatchButton';
+// import { DeactivateMatchButton } from '@/components/modules/travelMatch/DeactivateMatchButton';
 
 export const dynamic = 'force-dynamic';
 
