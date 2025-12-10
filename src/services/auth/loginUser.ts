@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // /* eslint-disable @typescript-eslint/no-explicit-any */
 // "use server"
 
@@ -218,7 +219,7 @@ export const loginUser = async (_currentState: any, formData: any): Promise<any>
             redirect(redirectTo.toString());
         } else {
             if (userRole === "ADMIN") {
-                redirect("/admin");
+                redirect("/admin/dashboard");
             } else {
                 redirect("/profile");
             }

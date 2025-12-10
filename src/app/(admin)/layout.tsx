@@ -10,12 +10,6 @@ export default async function Layout({
     const user = await getUserInfo();
 
     return (
-        // <main>
-        //     <Navbar user={user}></Navbar>
-        //     {children}
-        //     <Footer></Footer>
-        // </main>
-
         <main className=" min-h-screen flex flex-col">
             <Navbar user={user}></Navbar>
             <div className="grow-1">
@@ -23,6 +17,14 @@ export default async function Layout({
             </div>
             <Footer></Footer>
         </main>
+
+        //   <div className=" min-h-screen flex flex-col">
+        //     <Navbar></Navbar>
+        //     <div className="grow-1">
+        //         {children}
+        //     </div>
+        //     <Footer></Footer>
+        // </div>
 
     )
 }

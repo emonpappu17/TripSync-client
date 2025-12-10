@@ -174,9 +174,9 @@ const Navbar = ({ user }: NavbarProps) => {
         role === "ADMIN"
             ? [
                 { title: "Home", href: "/" },
-                { title: "Dashboard", href: "/dashboard" },
-                { title: "Manage Users", href: "/manage-users" },
-                { title: "Manage Plans", href: "/manage-plans" },
+                { title: "Dashboard", href: "/admin/dashboard" },
+                { title: "Manage Users", href: "/admin/users" },
+                { title: "Manage Plans", href: "/admin/travel-plans" },
             ]
             : role === "USER"
                 ? [
@@ -285,18 +285,7 @@ const Navbar = ({ user }: NavbarProps) => {
                                     </>
                                 )}
 
-                                {/* ✅ ADMIN DASHBOARD */}
-                                {role === "ADMIN" && (
-                                    <DropdownMenuItem asChild>
-                                        <Link
-                                            href="/dashboard"
-                                            className="flex items-center gap-2"
-                                        >
-                                            <LayoutDashboard className="h-4 w-4" />
-                                            Admin Dashboard
-                                        </Link>
-                                    </DropdownMenuItem>
-                                )}
+                            
 
                                 <DropdownMenuSeparator />
 
