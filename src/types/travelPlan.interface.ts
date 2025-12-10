@@ -28,7 +28,7 @@
 
 
 export type TravelType = "SOLO" | "COUPLE" | "FRIENDS" | "FAMILY";
-export type TravelStatus = "PLANNING" | "ONGOING" | "COMPLETED" | "CANCELLED";
+export type TravelStatus = "PLANNING" | "ONGOING" | "COMPLETED" | "CANCELLED" | "UPCOMING";
 
 // ===== USER INTERFACE =====
 export interface ITravelUser {
@@ -75,5 +75,6 @@ export interface ITravelPlan {
 
     _count: {
         requests: number;
+        travelMatches: number;
     };
 }

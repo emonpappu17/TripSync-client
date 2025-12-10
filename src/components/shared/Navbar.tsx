@@ -267,7 +267,8 @@ const Navbar = ({ user }: NavbarProps) => {
                                                 className="flex items-center gap-2"
                                             >
                                                 <Send className="h-4 w-4" />
-                                                Requests Sent
+                                                Sent Requests
+                                                {/* Requests Sent */}
                                             </Link>
                                         </DropdownMenuItem>
 
@@ -277,7 +278,8 @@ const Navbar = ({ user }: NavbarProps) => {
                                                 className="flex items-center gap-2"
                                             >
                                                 <Inbox className="h-4 w-4" />
-                                                Requests Received
+                                                Received Requests
+                                                {/* Requests Received */}
                                             </Link>
                                         </DropdownMenuItem>
                                     </>
