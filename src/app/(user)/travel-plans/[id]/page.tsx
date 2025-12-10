@@ -709,7 +709,7 @@ const DetailTravelPlanPage = async ({
     const res = await getTravelPlanById(id);
     const currentUser = await getUserInfo();
     const matchRes = await checkMatch(res?.data?.id, res?.data?.userId)
-    const isMatched = matchRes?.data.isMatched;
+    const isMatched = matchRes?.data?.isMatched;
 
     // console.log({ isMatched, matchRes });
 

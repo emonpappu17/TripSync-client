@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Loader2, Mail, Lock } from "lucide-react";
 import InputFieldError from "@/components/shared/InputFieldError";
 
-export default function LoginForm() {
+export default function LoginForm({ redirect }: { redirect?: string }) {
     const [state, formAction, isPending] = useActionState(loginUser, null);
 
     useEffect(() => {
@@ -23,6 +23,7 @@ export default function LoginForm() {
 
     return (
         <form action={formAction} className="space-y-6">
+            {redirect && <input type="hidden" name="redirect" value={redirect} />}
             <FieldGroup>
                 {/* EMAIL */}
                 <Field>

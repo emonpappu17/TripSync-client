@@ -10,6 +10,8 @@ import Link from 'next/link';
 // import { getMyMatches, getMatchStatistics } from '@/actions/travelMatch.action';
 // import { ITravelMatch } from '@/types/travelMatch.interface';
 import { getMatchStatistics, getMyMatches } from '@/services/travel-match';
+import { toast } from 'sonner';
+import MessageButton from '@/components/modules/travelPlan/MessageButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,7 +21,7 @@ export default async function MyMatchesPage() {
         getMatchStatistics(),
     ]);
 
-    const matches = (matchesRes?.data || []) ;
+    const matches = (matchesRes?.data || []);
     // const matches = (matchesRes?.data || []) as ITravelMatch[];
     const stats = statsRes?.data || {
         activeMatches: 0,
@@ -73,7 +75,7 @@ export default async function MyMatchesPage() {
                     </Card>
                 ) : (
                     <div className="grid gap-6">
-                        {matches.map((match:any) => (
+                        {matches.map((match: any) => (
                             <Card key={match.id} className="p-6 hover:shadow-lg transition-shadow">
                                 <div className="flex flex-col md:flex-row gap-6">
                                     {/* Travel Plan Info */}
@@ -127,7 +129,7 @@ export default async function MyMatchesPage() {
                                                     )}
                                                     {match.buddy.interests && match.buddy.interests.length > 0 && (
                                                         <div className="flex gap-1 mt-1">
-                                                            {match.buddy.interests.slice(0, 3).map((interest :any, idx:any) => (
+                                                            {match.buddy.interests.slice(0, 3).map((interest: any, idx: any) => (
                                                                 <Badge key={idx} variant="outline" className="text-xs">
                                                                     {interest}
                                                                 </Badge>
@@ -136,12 +138,17 @@ export default async function MyMatchesPage() {
                                                     )}
                                                 </div>
                                                 <div className="flex gap-2">
-                                                    <Link href={`/messages/${match.buddy.id}`}>
+                                                    {/* <Link href={`/messages/${match.buddy.id}`}>
                                                         <Button size="sm" variant="outline">
                                                             <MessageCircle className="h-4 w-4 mr-1" />
                                                             Message
                                                         </Button>
-                                                    </Link>
+                                                    </Link> */}
+                                                    {/* <Button size="sm" variant="outline" onClick={() => toast.success('This feature will be added soon!!')}>
+                                                        <MessageCircle className="h-4 w-4 mr-1" />
+                                                        Message
+                                                    </Button> */}
+                                                    <MessageButton></MessageButton>
                                                     <Link href={`/profile/${match.buddy.id}`}>
                                                         <Button size="sm">View Profile</Button>
                                                     </Link>

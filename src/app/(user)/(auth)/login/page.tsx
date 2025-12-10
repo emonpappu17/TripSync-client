@@ -10,7 +10,13 @@ export const metadata = {
 };
 
 
-export default function LoginPage() {
+export  default async function LoginPage({
+    searchParams,
+}: {
+    searchParams?: Promise<{ redirect?: string }>
+}) {
+    const params = (await searchParams) || {}
+
     return (
         <div className="min-h-screen gradient-subtle flex items-center justify-center p-4">
             <Card className="w-full max-w-md p-8">
@@ -23,7 +29,7 @@ export default function LoginPage() {
                     <p className="text-muted-foreground">Sign in to continue your journey</p>
                 </div>
 
-                <LoginForm></LoginForm>
+                <LoginForm redirect={params.redirect}></LoginForm>
 
                 <div className=" text-center text-sm">
                     <p className="text-muted-foreground">
