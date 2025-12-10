@@ -88,7 +88,7 @@ export async function updateUserProfile(_prevState: any, formData: FormData): Pr
         newFormData.append("file", file);
     }
 
-    // console.log('newFormData==>', newFormData);
+    console.log('newFormData==>', newFormData);
     // -------------------
     // Send to backend
     // -------------------

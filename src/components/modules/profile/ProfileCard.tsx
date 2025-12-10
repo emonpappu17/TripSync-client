@@ -5,13 +5,12 @@ import { Card } from '@/components/ui/card';
 import { IUser } from '@/types/user.interface';
 import { Edit, Mail, MapPin, Star } from 'lucide-react';
 import Link from 'next/link';
-import { toast } from 'sonner';
 
 const ProfileCard = ({ profileUser, isOwnProfile }: { profileUser: IUser, isOwnProfile: boolean }) => {
     return (
         <div className="lg:col-span-1">
             <Card className="p-6 sticky top-24">
-                <div className="text-center mb-6">
+                <div className="text-center ">
                     <div className="relative inline-block mb-4">
                         <Avatar className="w-32 h-32 border-4 border-primary/20">
                             <AvatarImage
@@ -44,7 +43,7 @@ const ProfileCard = ({ profileUser, isOwnProfile }: { profileUser: IUser, isOwnP
                 </div>
 
                 {/* Stats */}
-                <div className="grid grid-cols-3 gap-4 mb-6 pb-6 border-b">
+                <div className="grid grid-cols-3 gap-4  pb-6 border-b">
                     <div className="text-center">
                         <div className="text-2xl font-bold text-primary">
                             {profileUser?.stats?.travelPlansCount ?? 0}
@@ -90,7 +89,7 @@ const ProfileCard = ({ profileUser, isOwnProfile }: { profileUser: IUser, isOwnP
                 )}
 
                 {/* Bio */}
-                <div className="mt-6 pt-6 border-t">
+                <div className=" pt-6 border-t">
                     <h3 className="font-semibold mb-2">About</h3>
                     <p className="text-sm text-muted-foreground">
                         {profileUser?.bio || "This traveler hasn’t shared a bio yet."}
@@ -98,7 +97,7 @@ const ProfileCard = ({ profileUser, isOwnProfile }: { profileUser: IUser, isOwnP
                 </div>
 
                 {/* Interests */}
-                <div className="mt-6 pt-6 border-t">
+                <div className=" pt-6 border-t">
                     <h3 className="font-semibold mb-3">Interests</h3>
                     <div className="flex flex-wrap gap-2">
                         {(profileUser?.interests?.length
@@ -113,7 +112,7 @@ const ProfileCard = ({ profileUser, isOwnProfile }: { profileUser: IUser, isOwnP
                 </div>
 
                 {/* Visited Countries */}
-                <div className="mt-6 pt-6 border-t">
+                <div className=" pt-6 border-t">
                     <h3 className="font-semibold mb-3">Visited Countries</h3>
                     <div className="flex flex-wrap gap-2">
                         {(profileUser?.visitedCountries?.length

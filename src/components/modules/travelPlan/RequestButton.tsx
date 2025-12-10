@@ -24,6 +24,7 @@ interface RequestButtonProps {
     isCurrentUser: boolean;
     isRequested: boolean;
     acceptedCount: number;
+    isCompleted: boolean
 }
 
 const RequestButton = ({
@@ -31,7 +32,8 @@ const RequestButton = ({
     maxTravelersNumber,
     isCurrentUser,
     isRequested,
-    acceptedCount
+    acceptedCount,
+    isCompleted
 }: RequestButtonProps) => {
     const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
@@ -59,23 +61,12 @@ const RequestButton = ({
         try {
             setLoading(true);
 
-            // ---------------------------------------------------------
-            // REPLACE THIS WITH YOUR ACTUAL API SERVICE CALL
-            // Example: await createTravelRequest(travelPlanId, message);
-            // ---------------------------------------------------------
-            // console.log({ travelPlanId, message });
             const response = await createRequest(travelPlanId, message)
-
-            // console.log({ response });
 
             if (!response.success) {
                 toast.error(response.message || "Failed to send request");
                 return
             }
-            // if (!response.ok) {
-            //     throw new Error("Failed to send request");
-            // }
-
             // Success logic
             toast.success("Request sent successfully!");
             setIsOpen(false);
@@ -100,7 +91,7 @@ const RequestButton = ({
                 {isRequested && 'Requested' || maxTravelersNumber === 0 ? 'Trip Full' : 'Request to Join'}
             </Button> */}
 
-            <Button
+            {/* <Button
                 className="w-full gradient-hero"
                 size="lg"
                 disabled={maxTravelersNumber === 0 || isRequested}
@@ -111,6 +102,22 @@ const RequestButton = ({
                     : (maxTravelersNumber - acceptedCount) === 0
                         ? "Trip Full"
                         : "Request to Join"}
+            </Button> */}
+
+
+            <Button
+                className="w-full gradient-hero"
+                size="lg"
+                disabled={maxTravelersNumber === 0 || isRequested || isCompleted}
+                onClick={handleInitialClick}
+            >
+                {isCompleted
+                    ? "Trip Completed"
+                    : isRequested
+                        ? "Requested"
+                        : (maxTravelersNumber - acceptedCount) === 0
+                            ? "Trip Full"
+                            : "Request to Join"}
             </Button>
 
 

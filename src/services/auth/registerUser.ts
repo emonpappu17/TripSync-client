@@ -5,6 +5,7 @@ import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
 import { registerZodSchema } from "@/zod/auth.validation";
 import { redirect } from "next/navigation";
+import { loginUser } from "./loginUser";
 
 export async function registerUser(
     prevState: any,
@@ -60,7 +61,14 @@ export async function registerUser(
         }
 
         // revalidatePath('/', 'layout');
-        redirect('/');
+        // redirect('/login')
+        // redirect('/');
+
+        if (data.success) {
+            await loginUser(prevState, formData);
+        }
+
+        return data;
     } catch (error: any) {
         // return {
         //     success: false,

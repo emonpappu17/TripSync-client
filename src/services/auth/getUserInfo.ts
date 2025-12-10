@@ -18,13 +18,18 @@ export const getUserInfo = async (): Promise<IUser | any> => {
         const result = await response.json();
 
         if (result.success) {
-            const accessToken = await getCookie("accessToken");
+            // const accessToken = await getCookie("accessToken");
 
-            if (!accessToken) {
-                throw new Error("No access token found");
-            }
+            // if (!accessToken) {
+            //     throw new Error("No access token found");
+            // }
 
-            const verifiedToken = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET as string) as JwtPayload;
+            // const verifiedToken = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET as string) as JwtPayload;
+
+
+
+
+            
 
             // userInfo = {
             //     fullName: verifiedToken.name || "Unknown User",

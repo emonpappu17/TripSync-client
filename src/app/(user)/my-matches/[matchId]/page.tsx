@@ -14,14 +14,20 @@ import { DeactivateMatchButton } from '@/components/modules/travelPlan/Deactivat
 
 export const dynamic = 'force-dynamic';
 
-interface Props {
-    params: {
-        matchId: string;
-    };
-}
+// interface Props {
+//     params: {
+//         matchId: string;
+//     };
+// }
 
-export default async function MatchDetailPage({ params }: Props) {
-    const res = await getMatchById(params.matchId);
+export default async function MatchDetailPage({
+    params,
+}: {
+    params: Promise<{ matchId: string }>;
+}) {
+    const { matchId } = await params;
+
+    const res = await getMatchById(matchId);
     const match = res.data;
     // const match = res.data as ITravelMatch;
 
@@ -96,10 +102,10 @@ export default async function MatchDetailPage({ params }: Props) {
                                 )}
 
                                 <div className="space-y-2 mb-4">
-                                    <div className="flex items-center gap-2 text-sm">
+                                    {/* <div className="flex items-center gap-2 text-sm">
                                         <Users className="h-4 w-4 text-muted-foreground" />
                                         <span className="capitalize">{match.buddy.gender}</span>
-                                    </div>
+                                    </div> */}
                                     {match.buddy.email && (
                                         <div className="flex items-center gap-2 text-sm">
                                             <Mail className="h-4 w-4 text-muted-foreground" />

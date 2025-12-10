@@ -396,8 +396,8 @@ export const createTravelPlanZodSchema = z
             .refine((file) => file.size > 0, {
                 message: "Please select an image file",
             })
-            .refine((file) => file.size <= 3 * 1024 * 1024, {
-                message: "Image is too large. Please choose an image smaller than 3MB",
+            .refine((file) => file.size <= 1 * 1024 * 1024, {
+                message: "Image is too large. Please choose an image smaller than 1MB",
             })
             .refine(
                 (file) =>

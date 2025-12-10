@@ -30,7 +30,7 @@ interface TravelPlanFormProps {
 
 export default function TravelPlanForm({ plan }: TravelPlanFormProps) {
     const isEdit = !!plan;
-    const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3MB
+    const MAX_FILE_SIZE = 1 * 1024 * 1024; // 1MB
 
     // Action Binding
     const action = isEdit
@@ -49,7 +49,7 @@ export default function TravelPlanForm({ plan }: TravelPlanFormProps) {
         if (!file) return;
 
         if (file.size > MAX_FILE_SIZE) {
-            setImageError("Image must be smaller than 3MB.");
+            setImageError("Image must be smaller than 1MB.");
             e.target.value = "";
             return;
         }
@@ -126,7 +126,7 @@ export default function TravelPlanForm({ plan }: TravelPlanFormProps) {
                             <div className="flex flex-col items-center text-muted-foreground">
                                 <UploadCloud className="w-10 h-10 mb-2" />
                                 <span className="text-sm font-medium">Click to upload cover photo</span>
-                                <span className="text-xs text-muted-foreground/70">Max 3MB</span>
+                                <span className="text-xs text-muted-foreground/70">Max 1MB</span>
                             </div>
                         )}
 

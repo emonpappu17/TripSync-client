@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 
 import InputFieldError from "@/components/shared/InputFieldError";
 import { Loader2, Lock, Mail, User } from "lucide-react";
+// import { redirect } from "next/navigation";
 
 export default function RegisterForm() {
     const [state, formAction, isPending] = useActionState(registerUser, null);
@@ -21,6 +22,10 @@ export default function RegisterForm() {
         if (state?.success === false && state?.message) {
             toast.error(state.message);
         }
+        // if (state?.success === true) {
+        //     toast.success("Now please update user profile");
+        //     redirect('/profile')
+        // }
     }, [state]);
 
     // console.log({ state });

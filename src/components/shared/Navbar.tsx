@@ -183,7 +183,7 @@ const Navbar = ({ user }: NavbarProps) => {
                     { title: "Home", href: "/" },
                     { title: "Explore", href: "/explore" },
                     { title: "My Plans", href: "/travel-plans" },
-                    { title: "Find Buddy", href: "/find-buddy" },
+                    // { title: "Find Buddy", href: "/find-buddy" },
                 ]
                 : [
                     { title: "Home", href: "/" },

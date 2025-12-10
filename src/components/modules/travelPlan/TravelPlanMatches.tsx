@@ -59,7 +59,7 @@ export function TravelPlanMatches({ planId, currentUserId }: Props) {
     if (matches.length === 0) {
         return (
             <Card className="p-6">
-                <div className="flex items-center gap-2 mb-4">
+                <div className="flex items-center gap-2">
                     <Users className="h-5 w-5" />
                     <h3 className="text-lg font-semibold">Travel Buddies</h3>
                 </div>
@@ -72,7 +72,7 @@ export function TravelPlanMatches({ planId, currentUserId }: Props) {
 
     return (
         <Card className="p-6">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                     <Users className="h-5 w-5" />
                     <h3 className="text-lg font-semibold">Travel Buddies</h3>
@@ -80,7 +80,7 @@ export function TravelPlanMatches({ planId, currentUserId }: Props) {
                 </div>
             </div>
 
-            <Separator className="mb-4" />
+            <Separator className="" />
 
             <div className="space-y-4">
                 {matches.map((match) => {
@@ -125,11 +125,14 @@ export function TravelPlanMatches({ planId, currentUserId }: Props) {
                                 </div>
 
                                 <div className="flex gap-2">
-                                    <Link href={`/messages/${user.id}`}>
+                                    {/* <Link href={`/messages/${user.id}`}>
                                         <Button size="sm" variant="outline">
                                             <MessageCircle className="h-4 w-4" />
                                         </Button>
-                                    </Link>
+                                    </Link> */}
+                                    <Button size="sm" variant="outline" onClick={() => toast.success("This feature will be added in future!!")}>
+                                        <MessageCircle className="h-4 w-4" />
+                                    </Button>
                                     <Link href={`/profile/${user.id}`}>
                                         <Button size="sm">Profile</Button>
                                     </Link>
