@@ -690,12 +690,10 @@ import {
     Calendar,
     DollarSign,
     ExternalLink,
-    Heart,
-    Mail,
     MapPin,
     MessageCircle,
     User,
-    Users,
+    Users
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -711,13 +709,13 @@ const DetailTravelPlanPage = async ({
     const matchRes = await checkMatch(res?.data?.id, res?.data?.userId)
     const isMatched = matchRes?.data?.isMatched;
 
-    // console.log({ isMatched, matchRes });
+    console.log({ isMatched, matchRes });
 
     const plan = res?.data;
 
     const isOwner = currentUser?.id === plan?.userId;
 
-    // console.log({ isOwner, plan });
+    console.log({ isOwner, plan });
 
     const isRequested = plan?.requests?.some(
         (req: any) => req.requesterId === currentUser?.id
@@ -892,11 +890,11 @@ const DetailTravelPlanPage = async ({
                     </div>
 
                     {/* Sidebar */}
-                    <div className="space-y-6">
+                    <div>
                         <Card className="p-6 sticky top-24 shadow-lg">
-                            <h2 className="text-xl font-bold mb-6">Trip Details</h2>
+                            <h2 className="text-xl font-bold">Trip Details</h2>
 
-                            <div className="space-y-4 mb-6">
+                            <div className="space-y-4">
                                 <div className="flex items-start gap-3">
                                     <Calendar className="w-5 h-5 text-primary mt-0.5 shrink-0" />
                                     <div>
@@ -953,10 +951,24 @@ const DetailTravelPlanPage = async ({
                                         maxTravelersNumber={plan?.maxTravelers}
                                         travelPlanId={plan?.id}
                                         isRequested={isRequested}
-                                        isCompleted={plan.status ==="COMPLETED"}
+                                        isCompleted={plan.status === "COMPLETED"}
+                                        isMatched={isMatched}
                                     />
                                 )}
                             </div>
+
+                            {/* Safety Tips Card - Only for non-owners */}
+                            {!isOwner && (
+                                <Card className="p-6 bg-muted/10">
+                                    <h3 className="font-semibold mb-2 text-sm">Safety Tips</h3>
+                                    <ul className="text-xs text-muted-foreground space-y-1">
+                                        <li>• Always meet in public places first</li>
+                                        <li>• Verify host identity before traveling</li>
+                                        <li>• Share your itinerary with friends/family</li>
+                                        <li>• Trust your instincts</li>
+                                    </ul>
+                                </Card>
+                            )}
                         </Card>
                     </div>
                 </div>

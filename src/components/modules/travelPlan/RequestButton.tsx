@@ -24,7 +24,8 @@ interface RequestButtonProps {
     isCurrentUser: boolean;
     isRequested: boolean;
     acceptedCount: number;
-    isCompleted: boolean
+    isCompleted: boolean,
+    isMatched: boolean
 }
 
 const RequestButton = ({
@@ -33,7 +34,8 @@ const RequestButton = ({
     isCurrentUser,
     isRequested,
     acceptedCount,
-    isCompleted
+    isCompleted,
+    isMatched
 }: RequestButtonProps) => {
     const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
@@ -105,7 +107,7 @@ const RequestButton = ({
             </Button> */}
 
 
-            <Button
+            {/* <Button
                 className="w-full gradient-hero"
                 size="lg"
                 disabled={maxTravelersNumber === 0 || isRequested || isCompleted}
@@ -118,7 +120,30 @@ const RequestButton = ({
                         : (maxTravelersNumber - acceptedCount) === 0
                             ? "Trip Full"
                             : "Request to Join"}
+            </Button> */}
+
+            <Button
+                className="w-full gradient-hero"
+                size="lg"
+                disabled={
+                    maxTravelersNumber === 0 ||
+                    isRequested ||
+                    isCompleted ||
+                    isMatched
+                }
+                onClick={handleInitialClick}
+            >
+                {isCompleted
+                    ? "Trip Completed"
+                    : isMatched
+                        ? "Matched"
+                        : isRequested
+                            ? "Requested"
+                            : (maxTravelersNumber - acceptedCount) === 0
+                                ? "Trip Full"
+                                : "Request to Join"}
             </Button>
+
 
 
             <Dialog open={isOpen} onOpenChange={setIsOpen} >
