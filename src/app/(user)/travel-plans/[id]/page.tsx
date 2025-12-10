@@ -334,6 +334,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/no-unescaped-entities */
 import RequestButton from "@/components/modules/travelPlan/RequestButton";
+import { TravelPlanMatches } from "@/components/modules/travelPlan/TravelPlanMatches";
 // import { TravelPlanMatches } from "@/components/modules/travelPlan/TravelPlanMatches";
 import { BackButton } from "@/components/shared/BackButton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -480,12 +481,12 @@ const DetailTravelPlanPage = async ({
                         </Card>
 
                         {/* ✨ NEW: Travel Buddies Section */}
-                        {/* {currentUser && (
+                        {currentUser && (
                             <TravelPlanMatches 
                                 planId={plan.id} 
                                 currentUserId={currentUser?.id}
                             />
-                        )} */}
+                        )}
 
                         {/* Description */}
                         <Card className="p-6">
@@ -597,7 +598,7 @@ const DetailTravelPlanPage = async ({
                                     <>
                                         <Link href="/profile">
                                             <Button
-                                                className="w-full gradient-hero"
+                                                className="w-full gradient-hero mb-3"
                                                 size="lg"
                                             >
                                                 <User className="w-4 h-4 mr-2" />
