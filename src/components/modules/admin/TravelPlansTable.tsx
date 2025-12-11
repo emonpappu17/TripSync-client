@@ -2,9 +2,11 @@
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { TravelPlanActionsDropdown } from "./TravelPlanActionsDropdown";
+// import { TravelPlanActionsDropdown } from "./TravelPlanActionsDropdown";
 import { CalendarDays, MapPin, Users } from "lucide-react";
 import { format } from "date-fns";
+import { TravelPlanActionsDropdown } from "./TravelPlanActionsDropdown";
+import Image from "next/image";
 
 export default function TravelPlansTable({ data, meta }: any) {
     if (!data?.length) {
@@ -31,7 +33,7 @@ export default function TravelPlansTable({ data, meta }: any) {
     const getStatusColor = (status: string) => {
         switch (status) {
             case "PLANNING":
-                return "bg-blue-600";
+                return "bg-blue-600 text-white";
             case "UPCOMING":
                 return "bg-purple-600";
             case "ONGOING":
@@ -69,10 +71,17 @@ export default function TravelPlansTable({ data, meta }: any) {
                                 <TableCell>
                                     <div className="flex items-start gap-3">
                                         {plan.image ? (
-                                            <img
+                                            // <img
+                                            //     src={plan.image}
+                                            //     alt={plan.title}
+                                            //     className="w-16 h-16 rounded-lg object-cover"
+                                            // />
+                                            <Image
                                                 src={plan.image}
                                                 alt={plan.title}
-                                                className="w-16 h-16 rounded-lg object-cover"
+                                                width={64}   // equivalent to w-16
+                                                height={64}  // equivalent to h-16
+                                                className="rounded-lg object-cover"
                                             />
                                         ) : (
                                             <div className="w-16 h-16 rounded-lg bg-muted flex items-center justify-center">
@@ -108,7 +117,7 @@ export default function TravelPlansTable({ data, meta }: any) {
                                 {/* Destination */}
                                 <TableCell>
                                     <div className="flex items-center gap-2">
-                                        <MapPin className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                                        <MapPin className="w-4 h-4 text-muted-foreground shrink-0" />
                                         <div className="min-w-0">
                                             <div className="font-medium text-sm truncate">
                                                 {plan.destination}
@@ -123,7 +132,7 @@ export default function TravelPlansTable({ data, meta }: any) {
                                 {/* Dates */}
                                 <TableCell>
                                     <div className="flex items-start gap-2">
-                                        <CalendarDays className="w-4 h-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                                        <CalendarDays className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
                                         <div className="text-sm">
                                             <div>{format(new Date(plan.startDate), "MMM dd, yyyy")}</div>
                                             <div className="text-muted-foreground">

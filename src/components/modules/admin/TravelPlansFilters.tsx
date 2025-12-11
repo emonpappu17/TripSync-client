@@ -25,81 +25,76 @@ export default function TravelPlansFilters() {
     };
 
     return (
-        <div className="bg-card rounded-lg border shadow-sm p-6 my-6">
-            <div className="space-y-4">
-                {/* Search Input - Full Width */}
-                <div className="w-full">
-                    <label className="text-sm font-medium mb-2 block">
-                        Search Travel Plans
+        <div className="bg-card rounded-lg border p-2 my-6">
+            <div className="flex flex-wrap md:flex-nowrap gap-4 items-end overflow-x-auto p-2">
+                {/* Search */}
+                <div className="flex flex-col min-w-[200px] flex-1">
+                    <label className="text-sm font-medium text-muted-foreground flex items-center gap-2 mb-1">
+                        <Search className="h-4 w-4" /> Search Travel Plans
                     </label>
-                    <div className="relative">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                        <Input
-                            placeholder="Search by title or destination..."
-                            defaultValue={params.get("search") || ""}
-                            onChange={(e) => update("search", e.target.value)}
-                            className="pl-10"
-                        />
-                    </div>
+                    <Input
+                        placeholder="Search by title or destination..."
+                        defaultValue={params.get("search") || ""}
+                        onChange={(e) => update("search", e.target.value)}
+                    />
                 </div>
 
-                {/* Filter Selects - Responsive Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium flex items-center gap-2">
-                            <Calendar className="h-4 w-4" />
-                            Trip Status
-                        </label>
-                        <Select
-                            defaultValue={params.get("status") || "all"}
-                            onValueChange={(v) => update("status", v)}
-                        >
-                            <SelectTrigger>
-                                <SelectValue placeholder="All Status" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="all">All Status</SelectItem>
-                                <SelectItem value="PLANNING">Planning</SelectItem>
-                                <SelectItem value="UPCOMING">Upcoming</SelectItem>
-                                <SelectItem value="ONGOING">Ongoing</SelectItem>
-                                <SelectItem value="COMPLETED">Completed</SelectItem>
-                                <SelectItem value="CANCELLED">Cancelled</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium flex items-center gap-2">
-                            <MapPin className="h-4 w-4" />
-                            Visibility
-                        </label>
-                        <Select
-                            defaultValue={params.get("isPublic") || "all"}
-                            onValueChange={(v) => update("isPublic", v)}
-                        >
-                            <SelectTrigger>
-                                <SelectValue placeholder="All Plans" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="all">All Plans</SelectItem>
-                                <SelectItem value="true">Public</SelectItem>
-                                <SelectItem value="false">Private</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                </div>
-
-                {/* Action Button */}
-                <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                    <Button
-                        onClick={() => router.push("/admin/travel-plans")}
-                        variant="outline"
-                        className="w-full sm:w-auto"
+                {/* Trip Status */}
+                <div className="flex flex-col min-w-[150px]">
+                    <label className="text-sm font-medium text-muted-foreground flex items-center gap-2 mb-1">
+                        <Calendar className="h-4 w-4" /> Trip Status
+                    </label>
+                    <Select
+                        defaultValue={params.get("status") || "all"}
+                        onValueChange={(v) => update("status", v)}
                     >
-                        Reset All
+                        <SelectTrigger>
+                            <SelectValue placeholder="Select status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="all">All</SelectItem>
+                            <SelectItem value="PLANNING">Planning</SelectItem>
+                            <SelectItem value="UPCOMING">Upcoming</SelectItem>
+                            <SelectItem value="ONGOING">Ongoing</SelectItem>
+                            <SelectItem value="COMPLETED">Completed</SelectItem>
+                            <SelectItem value="CANCELLED">Cancelled</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
+
+                {/* Visibility */}
+                <div className="flex flex-col min-w-[150px]">
+                    <label className="text-sm font-medium text-muted-foreground flex items-center gap-2 mb-1">
+                        <MapPin className="h-4 w-4" /> Visibility
+                    </label>
+                    <Select
+                        defaultValue={params.get("isPublic") || "all"}
+                        onValueChange={(v) => update("isPublic", v)}
+                    >
+                        <SelectTrigger>
+                            <SelectValue placeholder="Select visibility" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="all">All</SelectItem>
+                            <SelectItem value="true">Public</SelectItem>
+                            <SelectItem value="false">Private</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
+
+                {/* Reset Button */}
+                <div className="flex flex-col min-w-[120px]">
+                    <label className="text-sm font-medium text-transparent mb-1">Reset</label>
+                    <Button
+                        variant="outline"
+                        onClick={() => router.push("/admin/travel-plans")}
+                        className="w-full"
+                    >
+                        Reset
                     </Button>
                 </div>
             </div>
         </div>
+
     );
 }
