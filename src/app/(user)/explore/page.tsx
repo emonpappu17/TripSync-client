@@ -26,44 +26,27 @@ async function getTravelPlans(searchParams: SearchParams) {
     });
 
     const response = await getAllTravelPlans(params);
-    //   const response = await serverFetch<any>(
-    //     `/search/travel-plans?${params.toString()}`,
-    //     { cache: 'no-store' } // Force fresh data
-    //   );
 
     return response;
 }
 
-// async function getRecommendations() {
-//     try {
-//         const response = await serverFetch<any>('/search/recommendations?limit=6');
-//         return response.data || [];
-//     } catch (error) {
-//         return [];
-//     }
-// }
 
 export default async function ExplorePage({
     searchParams,
 }: {
     searchParams: Promise<SearchParams>;
 }) {
-    //   const user = await requireAuth();
+
     const params = (await searchParams) || {}
-
-    // console.log('params==>', params);
-
     const [
         travelPlans,
-        //  recommendations
+
     ] = await Promise.all([
         getTravelPlans(params),
-        // searchParams.destination ? [] : getRecommendations(),
     ]);
 
     const hasFilters = Object.keys(params).length > 0;
 
-    // console.log('travelPlans===>', travelPlans);
     return (
         <div className="space-y-6 container mx-auto px-4 max-w-6xl mb-24 mt-14">
             <div>
@@ -83,23 +66,6 @@ export default async function ExplorePage({
 
                 {/* Results */}
                 <div className="lg:col-span-3 space-y-6">
-                    {/* {!hasFilters && recommendations.length > 0 && (
-                        <div>
-                            <h2 className="text-xl font-semibold mb-4">
-                                Recommended For You ✨
-                            </h2>
-                            <div className="grid md:grid-cols-2 gap-4">
-                                {recommendations.map((item: any) => (
-                                    <TravelPlanCard
-                                        key={item.plan.id}
-                                        plan={item.plan}
-                                        matchScore={item.score}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-                    )} */}
-
                     <div>
                         <div className="flex items-center justify-between mb-4">
                             <h2 className="text-xl font-semibold">
@@ -122,9 +88,6 @@ export default async function ExplorePage({
                                     <TravelPlanCard
                                         key={result.id}
                                         plan={result}
-                                        // host={result.host}
-                                        // matchScore={result.matchScore}
-                                    // matchReasons={result.matchReasons}
                                     />
                                 ))}
                             </div>

@@ -42,14 +42,6 @@ const TRAVEL_TYPES = [
     { value: 'FRIENDS', label: 'friends' },
 ];
 
-// const SORT_OPTIONS = [
-//     { value: 'relevance', label: 'Most Relevant' },
-//     { value: 'date-asc', label: 'Date: Earliest First' },
-//     { value: 'date-desc', label: 'Date: Latest First' },
-//     { value: 'budget-asc', label: 'Budget: Low to High' },
-//     { value: 'budget-desc', label: 'Budget: High to Low' },
-//     { value: 'spots-desc', label: 'Most Spots Available' },
-// ];
 
 const SORT_OPTIONS = [
     { sortBy: "createdAt", sortOrder: "asc", label: "Date: Earliest First" },
@@ -76,9 +68,6 @@ export default function SearchFilters() {
     const [travelType, setTravelType] = useState(
         searchParams.get('travelType') || ''
     );
-    // const [sortBy, setSortBy] = useState(
-    //     searchParams.get('sortBy') || 'relevance'
-    // );
 
     const [sortOption, setSortOption] = useState<{ sortBy: string; sortOrder: string }>(
         SORT_OPTIONS[0] // default
@@ -97,7 +86,7 @@ export default function SearchFilters() {
 
     // Check if any filters are applied
     const hasActiveFilters = destination || country || travelType || startDate || endDate ||
-        budgetRange[0] > 0 || budgetRange[1] < 10000 ;
+        budgetRange[0] > 0 || budgetRange[1] < 10000;
 
     const applyFilters = () => {
         const params = new URLSearchParams();
@@ -140,7 +129,7 @@ export default function SearchFilters() {
     const handleKeyPress = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter') {
 
-            console.log("jkjdlkfjaslkdf");
+            // console.log("jkjdlkfjaslkdf");
             applyFilters();
         }
         applyFilters();
@@ -304,19 +293,6 @@ export default function SearchFilters() {
                 {/* Sort By */}
                 <div className="space-y-2">
                     <Label htmlFor="sortBy">Sort By</Label>
-                    {/* <Select value={sortBy} onValueChange={setSortBy}>
-                        <SelectTrigger id="sortBy">
-                            <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {SORT_OPTIONS.map((option) => (
-                                <SelectItem key={option.value} value={option.value}>
-                                    {option.label}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select> */}
-
                     <Select
                         value={`${sortOption.sortBy}-${sortOption.sortOrder}`}
                         onValueChange={(val) => {
@@ -370,18 +346,6 @@ export default function SearchFilters() {
                         <X className="w-4 h-4 mr-2" />
                         Clear All
                     </Button>
-                    {/* 
-                    {hasActiveFilters && (
-                        <Button
-                            onClick={clearFilters}
-                            variant="outline"
-                            className="w-full"
-                            disabled={isPending}
-                        >
-                            <X className="w-4 h-4 mr-2" />
-                            Clear All
-                        </Button>
-                    )} */}
                 </div>
 
                 {/* Active Filters Summary */}
