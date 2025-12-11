@@ -169,6 +169,8 @@ const Navbar = ({ user }: NavbarProps) => {
     const pathname = usePathname();
     const role = user?.role;
 
+    console.log({ user });
+
     // ✅ CLEAN, ROLE-BASED MAIN NAV
     const navigationData =
         role === "ADMIN"
@@ -225,7 +227,7 @@ const Navbar = ({ user }: NavbarProps) => {
                     {/* ✅ USER PROFILE DROPDOWN */}
                     {user ? (
                         <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
+                            {/* <DropdownMenuTrigger asChild>
                                 <Button variant="ghost" className="flex items-center gap-2">
                                     <Avatar className="h-8 w-8">
                                         <AvatarImage src={user.profileImage || ""} />
@@ -237,7 +239,49 @@ const Navbar = ({ user }: NavbarProps) => {
                                         {user.fullName?.split(" ")[0]}
                                     </span>
                                 </Button>
+                            </DropdownMenuTrigger> */}
+
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" className="flex items-center gap-2">
+                                    <Avatar
+                                        className={`h-8 w-8 border-2 ${user.isVerified
+                                                ? "border-blue-400 ring-2 ring-blue-400 ring-offset-2" // premium look
+                                                : "border-transparent"
+                                            } rounded-full`}
+                                    >
+                                        <AvatarImage src={user.profileImage || ""} />
+                                        <AvatarFallback>
+                                            {user.fullName?.charAt(0) || "U"}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                    <span className="hidden md:block text-sm font-medium">
+                                        {user.fullName?.split(" ")[0]}
+                                    </span>
+                                </Button>
                             </DropdownMenuTrigger>
+
+                            {/* <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" className="flex items-center gap-2">
+                                    <Avatar
+                                        className={`h-8 w-8 rounded-full border-2 ${user.isVerified
+                                                ? "border-transparent bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 p-[2px]" // premium gradient border
+                                                : "border-muted"
+                                            }`}
+                                    >
+                                        <AvatarImage
+                                            src={user.profileImage || ""}
+                                            className={user.isVerified ? "rounded-full bg-white" : ""}
+                                        />
+                                        <AvatarFallback>
+                                            {user.fullName?.charAt(0) || "U"}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                    <span className="hidden md:block text-sm font-medium">
+                                        {user.fullName?.split(" ")[0]}
+                                    </span>
+                                </Button>
+                            </DropdownMenuTrigger> */}
+
 
                             <DropdownMenuContent className="w-56" align="end">
                                 {/* ✅ PROFILE */}
@@ -285,7 +329,7 @@ const Navbar = ({ user }: NavbarProps) => {
                                     </>
                                 )}
 
-                            
+
 
                                 <DropdownMenuSeparator />
 

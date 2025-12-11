@@ -5,6 +5,7 @@
 "use server"
 
 import { serverFetch } from "@/lib/server-fetch";
+import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 // export const createPaymentIntentFrontend = async (plan: string) => {
@@ -40,6 +41,8 @@ export async function createCheckoutSession(plan: string) {
         }
 
         // Redirect to Stripe Checkout
+        revalidateTag("user-info", { expire: 0 });
+
         redirect(result.data.paymentUrl);
     } catch (error: any) {
         if (error?.digest?.startsWith('NEXT_REDIRECT')) {

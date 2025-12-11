@@ -27,19 +27,19 @@ import Link from "next/link";
 export const revalidate = 300;
 
 // Generate static params for popular plans (optional)
-export async function generateStaticParams() {
-    // Fetch top 50 most popular plans to pre-generate
-    const params = new URLSearchParams();
-    params.set('limit', '50');
-    // params.set('sortBy', 'views');
-    
-    const response = await getAllTravelPlans(params);
-    const plans = response?.data || [];
+// export async function generateStaticParams() {
+//     // Fetch top 50 most popular plans to pre-generate
+//     const params = new URLSearchParams();
+//     params.set('limit', '50');
+//     // params.set('sortBy', 'views');
 
-    return plans.map((plan: any) => ({
-        id: plan.id,
-    }));
-}
+//     const response = await getAllTravelPlans(params);
+//     const plans = response?.data || [];
+
+//     return plans.map((plan: any) => ({
+//         id: plan.id,
+//     }));
+// }
 
 const DetailTravelPlanPage = async ({
     params,
@@ -68,6 +68,8 @@ const DetailTravelPlanPage = async ({
         plan?.requests?.filter((req: any) => req.status === "ACCEPTED").length || 0;
 
     const planOwner = plan?.user;
+
+    console.log({ planOwner });
 
     const startDate = plan?.startDate ? new Date(plan.startDate) : null;
     const endDate = plan?.endDate ? new Date(plan.endDate) : null;
@@ -138,7 +140,7 @@ const DetailTravelPlanPage = async ({
                         </div>
 
                         {/* Host Info */}
-                        <Card className="p-6 hover:shadow-lg transition-shadow">
+                        {/* <Card className="p-6 hover:shadow-lg transition-shadow">
                             <div className="flex items-start justify-between gap-4">
                                 <div className="flex items-center gap-4 flex-1">
                                     <Avatar className="w-16 h-16 ring-2 ring-primary/10">
@@ -172,7 +174,79 @@ const DetailTravelPlanPage = async ({
                                     </Button>
                                 </Link>
                             </div>
+                        </Card> */}
+
+                        <Card className="p-6 hover:shadow-xl transition-all duration-300 border-border/50">
+                            <div className="flex items-start justify-between gap-4">
+                                <div className="flex items-center gap-4 flex-1">
+                                    {/* Avatar with Verified Badge */}
+                                    <div className="relative">
+                                        <Avatar className="w-16 h-16 ring-4 ring-primary/10 transition-all hover:ring-primary/30">
+                                            <AvatarImage
+                                                src={planOwner?.profileImage as string}
+                                                alt={planOwner?.fullName || "User"}
+                                            />
+                                            <AvatarFallback className="text-2xl font-medium bg-linear-to-br from-blue-500 to-purple-600 text-white">
+                                                {planOwner?.fullName?.[0]?.toUpperCase() || "U"}
+                                            </AvatarFallback>
+                                        </Avatar>
+
+                                        {/* Verified Badge - Only shows if isVerified */}
+                                        {planOwner?.isVerified && (
+                                            <div className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full 
+                          bg-blue-500 flex items-center justify-center 
+                          ring-4 ring-background shadow-lg
+                          animate-in fade-in zoom-in duration-300">
+                                                <svg className="w-4 h-4 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path
+                                                        fillRule="evenodd"
+                                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                        clipRule="evenodd"
+                                                    />
+                                                </svg>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* Host Info */}
+                                    <div className="flex-1">
+                                        <p className="text-sm text-muted-foreground mb-1">
+                                            {isOwner ? "You are hosting this trip" : "Hosted by"}
+                                        </p>
+                                        <div className="flex items-center gap-2">
+                                            <h3 className="font-semibold text-lg">
+                                                {planOwner?.fullName || "Anonymous User"}
+                                            </h3>
+                                            {planOwner?.isVerified && (
+                                                <svg className="w-5 h-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path
+                                                        fillRule="evenodd"
+                                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                        clipRule="evenodd"
+                                                    />
+                                                </svg>
+                                            )}
+                                        </div>
+
+                                        {planOwner?.bio && (
+                                            <p className="text-sm text-muted-foreground mt-1.5 line-clamp-2">
+                                                {planOwner.bio}
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* View Profile Button */}
+                                <Link href={isOwner ? "/profile" : `/profile/${plan?.userId}`}>
+                                    <Button variant="outline" size="sm" className="group">
+                                        <User className="w-4 h-4 mr-2" />
+                                        View Profile
+                                        <ExternalLink className="w-3.5 h-3.5 ml-2 opacity-60 group-hover:opacity-100 transition-opacity" />
+                                    </Button>
+                                </Link>
+                            </div>
                         </Card>
+
 
                         {((currentUser && isOwner) || isMatched) && (
                             <TravelPlanMatches
@@ -180,7 +254,7 @@ const DetailTravelPlanPage = async ({
                                 currentUserId={currentUser?.id}
                             />
                         )}
-                
+
                         {/* Description */}
                         <Card className="p-6">
                             <h2 className="text-xl font-bold ">About This Trip</h2>
