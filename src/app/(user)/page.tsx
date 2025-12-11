@@ -1,13 +1,13 @@
-import HeroSection from '@/components/shadcn-studio/blocks/hero-section-01/hero-section-01'
+import TravelBuddyLanding from '@/components/modules/home/TravelBuddyLanding ';
+import HeroSection from '@/components/shadcn-studio/blocks/hero-section-01/hero-section-01';
 
-const HomePage = () => {
+const page = () => {
   return (
-    <div className='relative'>
-
-      <HeroSection />
-
+    <div>
+      <HeroSection></HeroSection>
+      <TravelBuddyLanding></TravelBuddyLanding>
     </div>
-  )
-}
+  );
+};
 
-export default HomePage
+export default page;
