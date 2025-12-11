@@ -1,10 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// import { requireAuth } from '@/lib/server/auth';
-// import { serverFetch } from '@/lib/server/api';
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { serverFetch } from '@/lib/server-fetch';
+import { getUserInfo } from '@/services/auth/getUserInfo';
 import { ArrowRight, Calendar, MapPin, Star, Users } from 'lucide-react';
 import Link from 'next/link';
 
@@ -13,12 +13,12 @@ export const dynamic = 'force-dynamic';
 
 async function getDashboardData() {
     const [myPlans, receivedRequests, sentRequests] = await Promise.all([
-        // serverFetch<any>('/travel-plans/my/plans?limit=5'),
+
         serverFetch.get(`/travelPlan/my/plans?limit=5`),
-        // serverFetch<any>('/travel-requests/received?status=PENDING&limit=10'),
+
         serverFetch.get(`/travelRequest/received?status=PENDING&limit=10`),
         serverFetch.get(`/travelRequest/sent?limit=5`)
-        // serverFetch<any>('/travel-requests/sent?limit=5'),
+
     ]);
     const plan = await myPlans.json()
     const requests = await receivedRequests.json()
@@ -36,17 +36,17 @@ async function getDashboardData() {
 }
 
 export default async function DashboardPage() {
-    // const user = await requireAuth();
+    const currentUser = await getUserInfo();
+
     const data = await getDashboardData();
 
-    console.log({ data });
 
     return (
         <div className="space-y-6 container mx-auto px-4 max-w-6xl mb-24 mt-14">
             {/* Welcome Section */}
             <div>
                 <h1 className="text-3xl font-bold mb-2">
-                    Welcome back, Emon! 👋
+                    Welcome back, {currentUser?.fullName}! 👋
                 </h1>
                 <p className="text-muted-foreground">
                     Here's what's happening with your trips
@@ -219,7 +219,7 @@ export default async function DashboardPage() {
                                 <span className="text-sm">Edit Profile</span>
                             </Button>
                         </Link>
-                        <Link href="/subscription">
+                        <Link href="#">
                             <Button variant="outline" className="w-full h-auto flex-col py-6">
                                 <Calendar className="h-8 w-8 mb-2" />
                                 <span className="text-sm">Upgrade</span>
