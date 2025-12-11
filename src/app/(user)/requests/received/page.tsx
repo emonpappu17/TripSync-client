@@ -65,7 +65,7 @@ export default async function ReceivedRequestsPage({
     const { data: requests, meta } = await getReceivedRequestsData(params);
 
     return (
-        <div className="space-y-6 container mx-auto px-4 max-w-6xl mb-24 mt-14">
+        <div className="space-y-6 container mx-auto px-4 max-w-6xl mb-24 mt-14 min-h-screen">
             {/* Header */}
             <div>
                 <h1 className="text-3xl font-bold mb-2">Received Requests</h1>

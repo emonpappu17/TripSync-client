@@ -79,7 +79,7 @@ export default async function SentRequestsPage({
     console.log({ meta });
 
     return (
-        <div className="space-y-6 container mx-auto px-4 max-w-6xl mb-24 mt-14">
+        <div className="space-y-6 container mx-auto px-4 max-w-6xl mb-24 mt-14 min-h-screen">
             {/* Header */}
             <div>
                 <h1 className="text-3xl font-bold mb-2">Sent Requests</h1>

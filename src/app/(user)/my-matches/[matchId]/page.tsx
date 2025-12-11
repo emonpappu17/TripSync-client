@@ -9,16 +9,8 @@ import { Calendar, MapPin, Users, Mail, MessageCircle, AlertCircle } from 'lucid
 import Link from 'next/link';
 import { getMatchById } from '@/services/travel-match';
 import { DeactivateMatchButton } from '@/components/modules/travelPlan/DeactivateMatchButton';
-// import { ITravelMatch } from '@/types/travelMatch.interface';
-// import { DeactivateMatchButton } from '@/components/modules/travelMatch/DeactivateMatchButton';
 
 export const dynamic = 'force-dynamic';
-
-// interface Props {
-//     params: {
-//         matchId: string;
-//     };
-// }
 
 export default async function MatchDetailPage({
     params,
@@ -29,7 +21,6 @@ export default async function MatchDetailPage({
 
     const res = await getMatchById(matchId);
     const match = res.data;
-    // const match = res.data as ITravelMatch;
 
     return (
         <div className='min-h-screen py-8'>
@@ -102,10 +93,6 @@ export default async function MatchDetailPage({
                                 )}
 
                                 <div className="space-y-2 mb-4">
-                                    {/* <div className="flex items-center gap-2 text-sm">
-                                        <Users className="h-4 w-4 text-muted-foreground" />
-                                        <span className="capitalize">{match.buddy.gender}</span>
-                                    </div> */}
                                     {match.buddy.email && (
                                         <div className="flex items-center gap-2 text-sm">
                                             <Mail className="h-4 w-4 text-muted-foreground" />
