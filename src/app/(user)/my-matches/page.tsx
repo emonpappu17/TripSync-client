@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// app/(dashboard)/my-matches/page.tsx
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -7,8 +7,6 @@ import { Card } from '@/components/ui/card';
 import { calculateDuration, formatDate } from '@/lib/utils';
 import { Calendar, MapPin, Users } from 'lucide-react';
 import Link from 'next/link';
-// import { getMyMatches, getMatchStatistics } from '@/actions/travelMatch.action';
-// import { ITravelMatch } from '@/types/travelMatch.interface';
 import MessageButton from '@/components/modules/travelPlan/MessageButton';
 import { getMatchStatistics, getMyMatches } from '@/services/travel-match';
 
@@ -21,7 +19,6 @@ export default async function MyMatchesPage() {
     ]);
 
     const matches = (matchesRes?.data || []);
-    // const matches = (matchesRes?.data || []) as ITravelMatch[];
     const stats = statsRes?.data || {
         activeMatches: 0,
         plansWithMatches: 0,
@@ -137,16 +134,6 @@ export default async function MyMatchesPage() {
                                                     )}
                                                 </div>
                                                 <div className="flex gap-2">
-                                                    {/* <Link href={`/messages/${match.buddy.id}`}>
-                                                        <Button size="sm" variant="outline">
-                                                            <MessageCircle className="h-4 w-4 mr-1" />
-                                                            Message
-                                                        </Button>
-                                                    </Link> */}
-                                                    {/* <Button size="sm" variant="outline" onClick={() => toast.success('This feature will be added soon!!')}>
-                                                        <MessageCircle className="h-4 w-4 mr-1" />
-                                                        Message
-                                                    </Button> */}
                                                     <MessageButton></MessageButton>
                                                     <Link href={`/profile/${match.buddy.id}`}>
                                                         <Button size="sm">View Profile</Button>
