@@ -9,6 +9,7 @@ import { getMyReviews } from '@/services/review';
 import { getMyTravelPlans } from '@/services/travel-plan';
 import { IUser } from '@/types/user.interface';
 import { Award, Calendar, Star, Users } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 const ProfilePage = async () => {
@@ -16,9 +17,6 @@ const ProfilePage = async () => {
     const userPlans = await getMyTravelPlans();
     const userReviews = await getMyReviews();
     const isOwnProfile = true
-    // console.log({ profileUser });
-    // console.log({ userPlans });
-    // console.log({ userReviews });
     return (
         <div className="min-h-screen py-8">
             <div className="container mx-auto px-4 max-w-6xl">
@@ -42,14 +40,16 @@ const ProfilePage = async () => {
 
                             {userPlans?.data?.length > 0 ? (
                                 <div className="space-y-4">
-                                    {userPlans?.data?.map((plan: any) => (
+                                    {userPlans?.data?.slice(0, 3).map((plan: any) => (
                                         <Link key={plan.id} href={`/travel-plans/${plan.id}`}>
                                             <Card className="p-6 hover:shadow-medium transition-smooth mb-4">
                                                 <div className="flex gap-4">
-                                                    <img
+                                                    <Image
                                                         src={plan.image}
                                                         alt={plan.destination}
-                                                        className="w-24 h-24 rounded-lg object-cover"
+                                                        width={96}   // w-24 = 96px
+                                                        height={96}  // h-24 = 96px
+                                                        className="rounded-lg object-cover"
                                                     />
                                                     <div className="flex-1">
                                                         <h3 className="text-xl font-bold mb-1">{plan.destination}, {plan.country}</h3>

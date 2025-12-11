@@ -74,17 +74,12 @@ const ProfileCard = ({ profileUser, isOwnProfile }: { profileUser: IUser, isOwnP
                     </Link>
                 ) : (
                     <div className="space-y-3">
-                        <Button className="w-full gradient-hero" 
-                        // onClick={() => toast.success("This feature will add soon!")}
+                        <Button className="w-full gradient-hero"
                         >
                             <Mail className="w-4 h-4 mr-2" />
                             Send Message
                         </Button>
-                        {/* <Link href="/pricing">
-                            <Button className="w-full" variant="outline">
-                                Upgrade to Premium
-                            </Button>
-                        </Link> */}
+
                     </div>
                 )}
 

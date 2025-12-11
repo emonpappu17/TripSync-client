@@ -1,18 +1,17 @@
-import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 import {
-    MapPin,
+    ArrowRight,
     Calendar,
     DollarSign,
-    Users,
     Heart,
-    ArrowRight,
-    Sparkles
+    MapPin,
+    Users
 } from 'lucide-react';
-import Link from 'next/link';
-import { cn } from '@/lib/utils';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface TravelPlanCardProps {
     plan: {
@@ -128,7 +127,7 @@ export default function TravelPlanCard({
 
                     {/* Location */}
                     <div className="flex items-start gap-2 text-sm">
-                        <MapPin className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                        <MapPin className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                         <div>
                             <p className="font-medium">{plan.destination}</p>
                             <p className="text-muted-foreground text-xs">{plan.country}</p>
@@ -137,7 +136,7 @@ export default function TravelPlanCard({
 
                     {/* Dates */}
                     <div className="flex items-start gap-2 text-sm">
-                        <Calendar className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                        <Calendar className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                         <div>
                             <p className="font-medium">
                                 {formattedStartDate} - {formattedEndDate}
@@ -150,7 +149,7 @@ export default function TravelPlanCard({
 
                     {/* Budget */}
                     <div className="flex items-start gap-2 text-sm">
-                        <DollarSign className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                        <DollarSign className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                         <div>
                             <p className="font-medium">{budgetRange}</p>
                             <p className="text-muted-foreground text-xs">Per person</p>
