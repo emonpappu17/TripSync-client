@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { blockUser, deleteUser, unblockUser, verifyUser } from "@/services/admin";
+import { blockUser, deleteUser, unblockUser, verifyUser } from "@/services/admin.userManage";
 import {
     Ban,
     Eye,
