@@ -339,7 +339,7 @@ export default function Filters() {
                     </label>
                     <Input
                         placeholder="Search by name or email..."
-                        onBlur={(e) => update("search", e.target.value)}
+                        onChange={(e) => update("search", e.target.value)}
                     />
                 </div>
 
