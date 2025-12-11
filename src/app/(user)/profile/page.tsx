@@ -5,12 +5,15 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { getUserInfo } from '@/services/auth/getUserInfo';
+// import { getUserInfo } from '@/services/auth/getUserInfo';
 import { getMyReviews } from '@/services/review';
 import { getMyTravelPlans } from '@/services/travel-plan';
 import { IUser } from '@/types/user.interface';
 import { Award, Calendar, Star, Users } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+
+export const dynamic = 'force-dynamic';
 
 const ProfilePage = async () => {
     const profileUser: IUser = await getUserInfo()

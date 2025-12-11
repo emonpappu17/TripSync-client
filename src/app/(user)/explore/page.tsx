@@ -7,6 +7,13 @@ import { Suspense } from 'react';
 // ISR: Revalidate every 60 seconds
 export const revalidate = 60;
 
+export async function generateMetadata() {
+    return {
+        title: "Explore Travel Plans | Travel Buddy",
+        description: "Discover and explore travel plans from travelers around the world",
+    };
+}
+
 interface SearchParams {
     destination?: string;
     startDate?: string;

@@ -5,6 +5,11 @@ import { getAllUsers } from "@/services/admin.userManage";
 // import UsersTable from "./UsersTable";
 // import Filters from "./Filters";
 
+// Dynamic rendering with short revalidation
+export const dynamic = 'force-dynamic';
+export const revalidate = 30; // Revalidate every 30 seconds
+
+
 interface IParams {
     search?: string;
     role?: string;

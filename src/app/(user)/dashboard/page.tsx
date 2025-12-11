@@ -219,7 +219,7 @@ export default async function DashboardPage() {
                                 <span className="text-sm">Edit Profile</span>
                             </Button>
                         </Link>
-                        <Link href="#">
+                        <Link href="/subscription">
                             <Button variant="outline" className="w-full h-auto flex-col py-6">
                                 <Calendar className="h-8 w-8 mb-2" />
                                 <span className="text-sm">Upgrade</span>

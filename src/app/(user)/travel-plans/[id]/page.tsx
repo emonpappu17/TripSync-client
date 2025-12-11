@@ -7,9 +7,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+// import { getAllTravelPlans } from "@/services/admin.travelPlanManage";
 import { getUserInfo } from "@/services/auth/getUserInfo";
 import { checkMatch } from "@/services/travel-match";
-import { getTravelPlanById } from "@/services/travel-plan";
+import { getAllTravelPlans, getTravelPlanById } from "@/services/travel-plan";
 import {
     Calendar,
     DollarSign,
@@ -21,6 +22,24 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+
+// ISR: Revalidate every 5 minutes
+export const revalidate = 300;
+
+// Generate static params for popular plans (optional)
+export async function generateStaticParams() {
+    // Fetch top 50 most popular plans to pre-generate
+    const params = new URLSearchParams();
+    params.set('limit', '50');
+    // params.set('sortBy', 'views');
+    
+    const response = await getAllTravelPlans(params);
+    const plans = response?.data || [];
+
+    return plans.map((plan: any) => ({
+        id: plan.id,
+    }));
+}
 
 const DetailTravelPlanPage = async ({
     params,
