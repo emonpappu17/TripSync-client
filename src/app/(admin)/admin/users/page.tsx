@@ -2,8 +2,7 @@ import Filters from "@/components/modules/admin/Filters";
 import Pagination from "@/components/modules/admin/Pagination";
 import UsersTable from "@/components/modules/admin/UsersTable";
 import { getAllUsers } from "@/services/admin.userManage";
-// import UsersTable from "./UsersTable";
-// import Filters from "./Filters";
+
 
 // Dynamic rendering with short revalidation
 export const dynamic = 'force-dynamic';

@@ -7,6 +7,7 @@ import { Edit, Mail, MapPin, Star } from 'lucide-react';
 import Link from 'next/link';
 
 const ProfileCard = ({ profileUser, isOwnProfile }: { profileUser: IUser, isOwnProfile: boolean }) => {
+    console.log({ profileUser });
     return (
         <div className="lg:col-span-1">
             <Card className="p-6 sticky top-24">

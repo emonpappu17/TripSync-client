@@ -18,13 +18,5 @@ export default async function Layout({
             <Footer></Footer>
         </main>
 
-        //   <div className=" min-h-screen flex flex-col">
-        //     <Navbar></Navbar>
-        //     <div className="grow-1">
-        //         {children}
-        //     </div>
-        //     <Footer></Footer>
-        // </div>
-
     )
 }

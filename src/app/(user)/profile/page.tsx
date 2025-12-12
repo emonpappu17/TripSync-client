@@ -21,7 +21,7 @@ const ProfilePage = async () => {
     const userReviews = await getMyReviews();
     const isOwnProfile = true
 
-    console.log({ profileUser });
+    // console.log({ profileUser });
     return (
         <div className="min-h-screen py-8">
             <div className="container mx-auto px-4 max-w-6xl">

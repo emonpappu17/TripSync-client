@@ -25,7 +25,7 @@ const DetailProfilePage = async ({
     // const userReviews = await getUserReviews);
     const userReviews = await getUserReviews(id);
 
-    console.log({ profileUser, userPlans, userReviews });
+    // console.log({ profileUser, userPlans, userReviews });
     const currentUser = await getUserInfo();
 
     return (
@@ -143,7 +143,7 @@ const DetailProfilePage = async ({
                                     )} */}
                                     <WriteReviewButton
                                         toUserId={id}
-                                        toUserName={profileUser.fullName}
+                                        toUserName={profileUser?.fullName}
                                         variant="outline"
                                         size="sm"
                                     />

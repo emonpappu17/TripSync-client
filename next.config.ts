@@ -30,14 +30,18 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
+      // {
+      //   protocol: "https",
+      //   hostname: "**", // allow all https hosts
+      // },
+      // {
+      //   protocol: "http",
+      //   hostname: "**", // allow all http hosts (if needed)
+      // },
       {
-        protocol: "https",
-        hostname: "**", // allow all https hosts
-      },
-      {
-        protocol: "http",
-        hostname: "**", // allow all http hosts (if needed)
-      },
+        protocol: 'https',
+        hostname: "res.cloudinary.com",
+      }
     ],
   },
   experimental: {

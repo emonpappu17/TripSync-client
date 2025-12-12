@@ -18,12 +18,6 @@ export async function registerUser(
         confirmPassword: formData.get('confirmPassword') as string,
     }
 
-    // console.log({ payload })
-
-    // Input Validation
-    // if (zodValidator(payload, registerZodSchema).success === false) {
-    //     return zodValidator(payload, registerZodSchema)
-    // }
 
     const validation = zodValidator(payload, registerZodSchema);
 

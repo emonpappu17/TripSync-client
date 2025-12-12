@@ -1,26 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// // import { serverFetch } from "@/lib/serverFetch";
-// "use server"
-// import { serverFetch } from "@/lib/server-fetch";
 "use server"
 
 import { serverFetch } from "@/lib/server-fetch";
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
-
-// export const createPaymentIntentFrontend = async (plan: string) => {
-//     const res = await serverFetch.post(`/payment/create-intent`, {
-//         body: JSON.stringify({ plan }),
-//         headers: { "Content-Type": "application/json" },
-//         cache: "no-store"
-//     });
-
-//     return await res.json();
-
-//     // const result = await response.json();
-//     //     return result;
-// };
-
 
 export async function createCheckoutSession(plan: string) {
     try {
@@ -42,6 +25,8 @@ export async function createCheckoutSession(plan: string) {
 
         // Redirect to Stripe Checkout
         revalidateTag("user-info", { expire: 0 });
+        // revalidateTag(`user-${id}`, { expire: 0 });
+
 
         redirect(result.data.paymentUrl);
     } catch (error: any) {

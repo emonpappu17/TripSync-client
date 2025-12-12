@@ -35,15 +35,15 @@ export default function TravelPlansTable({ data, meta }: any) {
             case "PLANNING":
                 return "bg-blue-600 text-white";
             case "UPCOMING":
-                return "bg-purple-600";
+                return "bg-purple-600 text-white";
             case "ONGOING":
-                return "bg-green-600";
+                return "bg-green-600 text-white";
             case "COMPLETED":
-                return "bg-gray-600";
+                return "bg-gray-600 text-white";
             case "CANCELLED":
-                return "bg-red-600";
+                return "bg-red-600 text-white";
             default:
-                return "bg-gray-600";
+                return "bg-gray-600 text-white";
         }
     };
 
@@ -71,18 +71,23 @@ export default function TravelPlansTable({ data, meta }: any) {
                                 <TableCell>
                                     <div className="flex items-start gap-3">
                                         {plan.image ? (
-                                            // <img
-                                            //     src={plan.image}
-                                            //     alt={plan.title}
-                                            //     className="w-16 h-16 rounded-lg object-cover"
-                                            // />
                                             <Image
                                                 src={plan.image}
                                                 alt={plan.title}
-                                                width={64}   // equivalent to w-16
-                                                height={64}  // equivalent to h-16
+                                                width={64}   
+                                                height={64} 
                                                 className="rounded-lg object-cover"
                                             />
+
+                                            // <div className="w-16 h-16 relative rounded-lg overflow-hidden">
+                                            //     <Image
+                                            //         src={plan.image}
+                                            //         alt={plan.title}
+                                            //         fill
+                                            //         className="object-cover"
+                                            //     />
+                                            // </div>
+
                                         ) : (
                                             <div className="w-16 h-16 rounded-lg bg-muted flex items-center justify-center">
                                                 <MapPin className="w-6 h-6 text-muted-foreground" />

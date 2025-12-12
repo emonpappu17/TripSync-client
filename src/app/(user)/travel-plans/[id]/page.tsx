@@ -362,7 +362,7 @@ const DetailTravelPlanPage = async ({
                                         maxTravelersNumber={plan?.maxTravelers}
                                         travelPlanId={plan?.id}
                                         isRequested={isRequested}
-                                        isCompleted={plan.status === "COMPLETED"}
+                                        isCompleted={plan?.status === "COMPLETED"}
                                         isMatched={isMatched}
                                     />
                                 )}

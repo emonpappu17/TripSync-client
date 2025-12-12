@@ -1,16 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
-import { useState } from "react";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -21,6 +11,16 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Label } from "@/components/ui/label";
 import {
     Select,
     SelectContent,
@@ -29,19 +29,17 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
+import { deleteTravelPlanByAdmin, toggleTravelPlanVisibility, updateTravelPlanStatus } from "@/services/admin.travelPlanManage";
 import {
-    MoreVertical,
     Eye,
-    Trash2,
-    Calendar,
-    EyeOff,
-    Loader2
+    Loader2,
+    MoreVertical,
+    Trash2
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { TravelPlanDetailsModal } from "./TravelPlanDetailsModal";
-import { deleteTravelPlanByAdmin, toggleTravelPlanVisibility, updateTravelPlanStatus } from "@/services/admin.travelPlanManage";
+import { useState } from "react";
 import { toast } from "sonner";
+import { TravelPlanDetailsModal } from "./TravelPlanDetailsModal";
 
 interface TravelPlanActionsDropdownProps {
     plan: any;
@@ -145,19 +143,19 @@ export function TravelPlanActionsDropdown({ plan }: TravelPlanActionsDropdownPro
                         View Details
                     </DropdownMenuItem>
 
-                    <DropdownMenuItem onClick={() => openDialog("STATUS")}>
+                    {/* <DropdownMenuItem onClick={() => openDialog("STATUS")}>
                         <Calendar className="w-4 h-4 mr-2" />
                         Update Status
-                    </DropdownMenuItem>
+                    </DropdownMenuItem> */}
 
-                    <DropdownMenuItem onClick={() => openDialog("VISIBILITY")}>
+                    {/* <DropdownMenuItem onClick={() => openDialog("VISIBILITY")}>
                         {plan.isPublic ? (
                             <EyeOff className="w-4 h-4 mr-2" />
                         ) : (
                             <Eye className="w-4 h-4 mr-2" />
                         )}
                         Make {plan.isPublic ? "Private" : "Public"}
-                    </DropdownMenuItem>
+                    </DropdownMenuItem> */}
 
                     <DropdownMenuSeparator />
 
