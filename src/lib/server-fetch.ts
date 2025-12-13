@@ -68,7 +68,7 @@
 
 import { getCookie } from "@/services/auth/tokenHandlers";
 
-const BACKEND_API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+const BACKEND_API_URL = process.env.NEXT_PUBLIC_BASE_API_URL || "http://localhost:5000/api/v1";
 
 interface FetchOptions extends RequestInit {
     revalidate?: number | false;

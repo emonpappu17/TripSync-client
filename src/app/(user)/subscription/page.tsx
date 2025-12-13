@@ -14,7 +14,7 @@ export default function SubscriptionPage() {
 
     const handleSubscribe = async (plan: string) => {
 
-        console.log('pak==>', plan);
+        // console.log('pak==>', plan);
         try {
             setLoadingPlan(plan);
             const result = await createCheckoutSession(plan);

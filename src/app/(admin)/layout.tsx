@@ -2,6 +2,9 @@ import Footer from "@/components/shared/Footer";
 import Navbar from "@/components/shared/Navbar";
 import { getUserInfo } from "@/services/auth/getUserInfo";
 
+export const dynamic = "force-dynamic";
+
+
 export default async function Layout({
     children,
 }: {

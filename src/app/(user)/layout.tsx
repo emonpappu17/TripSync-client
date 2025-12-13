@@ -2,6 +2,8 @@ import Footer from "@/components/shared/Footer";
 import Navbar from "@/components/shared/Navbar";
 import { getUserInfo } from "@/services/auth/getUserInfo";
 
+export const dynamic = "force-dynamic";
+
 export default async function Layout({
     children,
 }: {
@@ -10,12 +12,6 @@ export default async function Layout({
     const user = await getUserInfo();
 
     return (
-        // <main>
-        //     <Navbar user={user}></Navbar>
-        //     {children}
-        //     <Footer></Footer>
-        // </main>
-
         <main className=" min-h-screen flex flex-col">
             <Navbar user={user}></Navbar>
             <div className="grow-1">
