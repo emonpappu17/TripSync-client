@@ -5,8 +5,8 @@ import { Card } from "@/components/ui/card";
 import Link from "next/link";
 
 export const metadata = {
-    title: 'Login - Travel Buddy',
-    description: 'Login to your Travel Buddy account',
+    title: 'Login - Travel Sync',
+    description: 'Login to your Travel Sync account',
 };
 
 

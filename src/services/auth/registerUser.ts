@@ -47,7 +47,7 @@ export async function registerUser(
 
         // console.log({ data });
 
-        if (!response.ok) {
+        if (!data.success) {
             return {
                 success: false,
                 message: data.message || 'Registration failed',

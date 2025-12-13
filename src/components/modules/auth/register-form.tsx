@@ -20,15 +20,9 @@ export default function RegisterForm() {
 
     useEffect(() => {
         if (state?.success === false && state?.message) {
-            toast.error(state.message);
+            toast.error(state.message || "Register failed!");
         }
-        // if (state?.success === true) {
-        //     toast.success("Now please update user profile");
-        //     redirect('/profile')
-        // }
     }, [state]);
-
-    // console.log({ state });
 
     return (
         <form action={formAction} className="space-y-6">

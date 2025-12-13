@@ -2,10 +2,12 @@
 import z from "zod";
 
 export const registerZodSchema = z.object({
-    fullName: z.string().min(1, { message: "Name is required" }),
+    fullName: z.string()
+        .min(2, 'Full name must be at least 2 characters')
+        .max(100, 'Full name must not exceed 100 characters'),
     email: z.email({ message: "Valid email is required" }),
-    password: z.string().min(6, {
-        error: "Password is required and must be at least 6 characters long",
+    password: z.string().min(8, {
+        error: "Password is required and must be at least 8 characters long",
     }).max(100, {
         error: "Password must be at most 100 characters long",
     }),

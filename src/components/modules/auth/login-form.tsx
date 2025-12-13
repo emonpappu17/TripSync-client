@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useRef } from "react";
+import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
 
 import { loginUser } from "@/services/auth/loginUser"; // <-- your server action
@@ -9,8 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 
-import { Loader2, Mail, Lock } from "lucide-react";
 import InputFieldError from "@/components/shared/InputFieldError";
+import { Loader2, Lock, Mail } from "lucide-react";
 
 export default function LoginForm({ redirect }: { redirect?: string }) {
     const [state, formAction, isPending] = useActionState(loginUser, null);
