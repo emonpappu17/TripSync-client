@@ -43,8 +43,8 @@ export  default async function LoginPage({
                 <div className=" p-4 bg-muted/50 rounded-lg text-sm">
                     <p className="font-medium mb-2">Demo Credentials:</p>
                     <p className="text-muted-foreground">Admin: admin@tripSync.com / Admin123!</p>
-                    <p className="text-muted-foreground">User: user1@tripSync.com / user123</p>
-                    <p className="text-muted-foreground">User: user2@tripSync.com / user123</p>
+                    <p className="text-muted-foreground">User: user1@tripSync.com / user123456</p>
+                    <p className="text-muted-foreground">User: user2@tripSync.com / user123456</p>
                 </div>
             </Card>
         </div>
