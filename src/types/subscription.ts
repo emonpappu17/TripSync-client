@@ -14,14 +14,14 @@ export const PLANS = [
     },
     {
         id: SubscriptionPlan.MONTHLY,
-        price: 29.99,
+        price: 9.99,
         duration: "per month",
         label: "Monthly Plan",
         features: ["Full access", "Priority support"],
     },
     {
         id: SubscriptionPlan.YEARLY,
-        price: 299.99,
+        price: 99.99,
         duration: "per year",
         label: "Yearly Plan",
         features: ["Full access", "Priority support", "Save money"],

@@ -43,3 +43,23 @@ export async function createCheckoutSession(plan: string) {
         };
     }
 }
+export async function getMySubscription() {
+    try {
+        const response = await serverFetch.get("/payment/subscription");
+
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        if (error?.digest?.startsWith('NEXT_REDIRECT')) {
+            throw error;
+        }
+
+        console.error("getMySubscription error:", error);
+        return {
+            success: false,
+            message: process.env.NODE_ENV === 'development'
+                ? error.message
+                : "Failed to create checkout session. Please try again.",
+        };
+    }
+}

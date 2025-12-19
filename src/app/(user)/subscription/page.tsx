@@ -1,61 +1,93 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
 
-import { useState } from "react";
-import { PLANS } from "@/types/subscription";
+import { PLANS, SubscriptionPlan } from "@/types/subscription";
 // import PlanCard from "@/components/subscriptions/PlanCard";
 // import { createPaymentIntentFrontend } from "@/services/payments";
-import { toast } from "sonner";
-import PlanCard from "@/components/modules/subscriptions/PlanCard";
-import { createCheckoutSession } from "@/services/payments";
+import SubscribeButton from "@/components/modules/subscriptions/SubscribeButton";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { getMySubscription } from "@/services/payments";
+import { Check } from "lucide-react";
 
-export default function SubscriptionPage() {
-    const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
-
-    const handleSubscribe = async (plan: string) => {
-
-        // console.log('pak==>', plan);
-        try {
-            setLoadingPlan(plan);
-            const result = await createCheckoutSession(plan);
-
-            console.log({ result });
-
-            // if (!result.success) {
-            //     toast.error(result.message || "Payment failed");
-            //     setLoadingPlan(null);
-            //     return;
-            // }
-
-            if (result && !result.success) {
-                toast.error(result.message || "Failed to start checkout");
-            }
-
-            // Redirect to Stripe Checkout
-            // window.location.href = result.paymentUrl;
-        } catch (err: any) {
-            toast.error(err.message);
-        } finally {
-            setLoadingPlan(null);
-        }
-    };
+export default async function SubscriptionPage() {
+    const res = await getMySubscription();
+    const currentPlan = res?.data || null;
 
     return (
-        <div className="max-w-5xl mx-auto py-12">
-            <h1 className="text-3xl font-bold text-center mb-10">
-                Choose Your Subscription
-            </h1>
+        <section className="py-16 md:py-32">
+            <div className="mx-auto max-w-6xl px-6">
+                {/* Heading */}
+                <div className="mx-auto max-w-2xl space-y-6 text-center">
+                    <h1 className="text-4xl font-semibold lg:text-5xl">
+                        Pricing that Scales with You
+                    </h1>
+                    <p>
+                        Choose a plan that fits your needs and grow at your own pace.
+                    </p>
+                </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
-                {PLANS.map((plan) => (
-                    <PlanCard
-                        key={plan.id}
-                        plan={plan}
-                        onSubscribe={handleSubscribe}
-                        loading={loadingPlan === plan.id}
-                    />
-                ))}
+                {/* Pricing Cards */}
+                <div className="mt-8 grid gap-6 md:mt-20 md:grid-cols-3">
+                    {PLANS.map((plan) => {
+                        const isPopular = plan.id === SubscriptionPlan.MONTHLY;
+                        const activePlan = plan.id === (currentPlan?.plan || SubscriptionPlan.FREE);
+                        return (
+                            <Card
+                                key={plan.id}
+                                className={`flex flex-col relative ${isPopular ? "ring-2 ring-primary" : ""
+                                    }`}
+                            >
+                                {isPopular && (
+                                    <span className="absolute -top-3 inset-x-0 mx-auto w-fit rounded-full bg-linear-to-br from-purple-400 to-amber-300 px-3 py-1 text-xs font-medium text-amber-950">
+                                        Popular
+                                    </span>
+                                )}
+
+                                <CardHeader>
+                                    <CardTitle className="font-medium">
+                                        {plan.label}
+                                    </CardTitle>
+
+                                    <span className="my-3 block text-2xl font-semibold">
+                                        ${plan.price}
+                                        <span className="text-sm font-normal text-muted-foreground">
+                                            {" "} / {plan.duration}
+                                        </span>
+                                    </span>
+
+                                    <CardDescription className="text-sm">
+                                        Per user
+                                    </CardDescription>
+                                </CardHeader>
+
+                                <CardContent className="space-y-4">
+                                    <hr className="border-dashed" />
+                                    <ul className="space-y-3 text-sm">
+                                        {plan.features.map((feature, index) => (
+                                            <li
+                                                key={index}
+                                                className="flex items-center gap-2"
+                                            >
+                                                <Check className="size-3" />
+                                                {feature}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </CardContent>
+
+                                <CardFooter className="mt-auto">
+                                    <SubscribeButton
+                                        isPopular={isPopular}
+                                        plan={plan.id}
+                                        activePlan={activePlan}
+                                    />
+
+                                </CardFooter>
+                            </Card>
+                        );
+                    })}
+                </div>
             </div>
-        </div>
+        </section>
+
     );
 }

@@ -11,7 +11,7 @@ export default function PlanCard({ plan, onSubscribe }: any) {
             <div>
                 <h2 className="text-xl font-semibold">{plan.label}</h2>
                 <p className="text-gray-700 mt-1">
-                    {plan.price === 0 ? "Free" : `BDT ${plan.price}`}{" "}
+                    {plan.price === 0 ? "Free" : `USD ${plan.price}`}{" "}
                     <span className="text-sm text-gray-500">{plan.duration}</span>
                 </p>
 
