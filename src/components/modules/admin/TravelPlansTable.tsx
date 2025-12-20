@@ -1,16 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-// import { TravelPlanActionsDropdown } from "./TravelPlanActionsDropdown";
-import { CalendarDays, MapPin, Users } from "lucide-react";
 import { format } from "date-fns";
-import { TravelPlanActionsDropdown } from "./TravelPlanActionsDropdown";
+import { CalendarDays, MapPin, Users } from "lucide-react";
 import Image from "next/image";
+import { TravelPlanActionsDropdown } from "./TravelPlanActionsDropdown";
 
 export default function TravelPlansTable({ data, meta }: any) {
     if (!data?.length) {
-        return <div className="text-center py-12 text-muted-foreground">No travel plans found</div>;
+        return (
+            <div className="flex flex-col items-center justify-center py-16 text-center space-y-4">
+                <div className="flex items-center justify-center w-16 h-16 rounded-full bg-muted">
+                    <MapPin className="w-8 h-8 text-muted-foreground" />
+                </div>
+                <h3 className="text-lg font-semibold">No travel plans found</h3>
+            </div>);
     }
 
     const getStatusVariant = (status: string) => {
@@ -74,28 +79,18 @@ export default function TravelPlansTable({ data, meta }: any) {
                                             <Image
                                                 src={plan.image}
                                                 alt={plan.title}
-                                                width={64}   
-                                                height={64} 
+                                                width={64}
+                                                height={64}
                                                 className="rounded-lg object-cover"
                                             />
-
-                                            // <div className="w-16 h-16 relative rounded-lg overflow-hidden">
-                                            //     <Image
-                                            //         src={plan.image}
-                                            //         alt={plan.title}
-                                            //         fill
-                                            //         className="object-cover"
-                                            //     />
-                                            // </div>
-
                                         ) : (
                                             <div className="w-16 h-16 rounded-lg bg-muted flex items-center justify-center">
                                                 <MapPin className="w-6 h-6 text-muted-foreground" />
                                             </div>
                                         )}
-                                        <div className="flex-1 min-w-0">
+                                        <div className="flex-1 min-w-0 max-w-[400px]">
                                             <div className="font-medium truncate">{plan.title}</div>
-                                            <div className="text-sm text-muted-foreground line-clamp-2">
+                                            <div className="text-sm text-muted-foreground line-clamp-6">
                                                 {plan.description || "No description"}
                                             </div>
                                         </div>

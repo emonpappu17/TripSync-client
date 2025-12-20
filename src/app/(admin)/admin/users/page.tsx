@@ -47,7 +47,7 @@ export default async function AdminUsersPage({
 
             {/* SERVER TABLE */}
             <UsersTable data={result?.data} meta={result?.meta} />
-            <Pagination totalPages={result?.meta?.totalPages} />
+            <Pagination totalPages={result?.meta?.totalPages || 1} />
         </div>
     );
 }

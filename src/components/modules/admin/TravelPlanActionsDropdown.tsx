@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
@@ -20,21 +21,12 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Label } from "@/components/ui/label";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { deleteTravelPlanByAdmin, toggleTravelPlanVisibility, updateTravelPlanStatus } from "@/services/admin.travelPlanManage";
+import { deleteTravelPlanByAdmin } from "@/services/admin.travelPlanManage";
 import {
     Eye,
     Loader2,
     MoreVertical,
-    Trash2
+    Trash2,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -46,85 +38,26 @@ interface TravelPlanActionsDropdownProps {
 }
 
 export function TravelPlanActionsDropdown({ plan }: TravelPlanActionsDropdownProps) {
-    // const { toast } = useToast();
     const router = useRouter();
     const [showDialog, setShowDialog] = useState(false);
     const [showDetailsModal, setShowDetailsModal] = useState(false);
-    const [actionType, setActionType] = useState<"DELETE" | "STATUS" | "VISIBILITY" | null>(null);
-    const [reason, setReason] = useState("");
-    const [newStatus, setNewStatus] = useState(plan.status);
     const [loading, setLoading] = useState(false);
+    const [reason, setReason] = useState("");
 
-    const handleAction = async () => {
-        if (!actionType) return;
-
+    const handleDelete = async () => {
         setLoading(true);
-        let result;
-
-        switch (actionType) {
-            case "DELETE":
-                result = await deleteTravelPlanByAdmin(plan.id, reason);
-                break;
-            case "STATUS":
-                result = await updateTravelPlanStatus(plan.id, newStatus);
-                break;
-            case "VISIBILITY":
-                result = await toggleTravelPlanVisibility(plan.id, !plan.isPublic);
-                break;
-        }
-
+        const result = await deleteTravelPlanByAdmin(plan.id, reason);
         setLoading(false);
 
         if (result?.success) {
-            toast.success(result.message || "Action completed successfully");
+            toast.success(result.message || "Travel plan deleted successfully");
             setShowDialog(false);
             setReason("");
-            setActionType(null);
             router.refresh();
         } else {
-            toast.error(result?.message || "Failed to perform action");
+            toast.error(result?.message || "Failed to delete travel plan");
         }
     };
-
-    const openDialog = (type: typeof actionType) => {
-        setActionType(type);
-        setShowDialog(true);
-    };
-
-    const getDialogContent = () => {
-        switch (actionType) {
-            case "DELETE":
-                return {
-                    title: "Delete Travel Plan",
-                    description: `Are you sure you want to delete "${plan.title}"? This action cannot be undone.`,
-                    actionText: "Delete Plan",
-                    variant: "destructive" as const,
-                };
-            case "STATUS":
-                return {
-                    title: "Update Trip Status",
-                    description: `Change the status of "${plan.title}"`,
-                    actionText: "Update Status",
-                    variant: "default" as const,
-                };
-            case "VISIBILITY":
-                return {
-                    title: `Make Plan ${plan.isPublic ? "Private" : "Public"}`,
-                    description: `Are you sure you want to make "${plan.title}" ${plan.isPublic ? "private" : "public"}?`,
-                    actionText: `Make ${plan.isPublic ? "Private" : "Public"}`,
-                    variant: "default" as const,
-                };
-            default:
-                return {
-                    title: "",
-                    description: "",
-                    actionText: "",
-                    variant: "default" as const,
-                };
-        }
-    };
-
-    const dialogContent = getDialogContent();
 
     return (
         <>
@@ -143,24 +76,10 @@ export function TravelPlanActionsDropdown({ plan }: TravelPlanActionsDropdownPro
                         View Details
                     </DropdownMenuItem>
 
-                    {/* <DropdownMenuItem onClick={() => openDialog("STATUS")}>
-                        <Calendar className="w-4 h-4 mr-2" />
-                        Update Status
-                    </DropdownMenuItem> */}
-
-                    {/* <DropdownMenuItem onClick={() => openDialog("VISIBILITY")}>
-                        {plan.isPublic ? (
-                            <EyeOff className="w-4 h-4 mr-2" />
-                        ) : (
-                            <Eye className="w-4 h-4 mr-2" />
-                        )}
-                        Make {plan.isPublic ? "Private" : "Public"}
-                    </DropdownMenuItem> */}
-
                     <DropdownMenuSeparator />
 
                     <DropdownMenuItem
-                        onClick={() => openDialog("DELETE")}
+                        onClick={() => setShowDialog(true)}
                         className="text-red-600"
                     >
                         <Trash2 className="w-4 h-4 mr-2" />
@@ -169,57 +88,25 @@ export function TravelPlanActionsDropdown({ plan }: TravelPlanActionsDropdownPro
                 </DropdownMenuContent>
             </DropdownMenu>
 
+            {/* Delete Confirmation Dialog */}
             <AlertDialog open={showDialog} onOpenChange={setShowDialog}>
                 <AlertDialogContent>
                     <AlertDialogHeader>
-                        <AlertDialogTitle>{dialogContent.title}</AlertDialogTitle>
+                        <AlertDialogTitle>Delete Travel Plan</AlertDialogTitle>
                         <AlertDialogDescription>
-                            {dialogContent.description}
+                            Are you sure you want to delete "{plan.title}"? This action cannot be undone.
                         </AlertDialogDescription>
                     </AlertDialogHeader>
-
-                    <div className="space-y-4">
-                        {actionType === "STATUS" && (
-                            <div className="space-y-2">
-                                <Label htmlFor="status">New Status</Label>
-                                <Select value={newStatus} onValueChange={setNewStatus}>
-                                    <SelectTrigger>
-                                        <SelectValue />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="PLANNING">Planning</SelectItem>
-                                        <SelectItem value="UPCOMING">Upcoming</SelectItem>
-                                        <SelectItem value="ONGOING">Ongoing</SelectItem>
-                                        <SelectItem value="COMPLETED">Completed</SelectItem>
-                                        <SelectItem value="CANCELLED">Cancelled</SelectItem>
-                                    </SelectContent>
-                                </Select>
-                            </div>
-                        )}
-
-                        {actionType === "DELETE" && (
-                            <div className="space-y-2">
-                                <Label htmlFor="reason">Reason (Optional)</Label>
-                                <Textarea
-                                    id="reason"
-                                    placeholder="Enter reason for deletion..."
-                                    value={reason}
-                                    onChange={(e) => setReason(e.target.value)}
-                                    rows={3}
-                                />
-                            </div>
-                        )}
-                    </div>
 
                     <AlertDialogFooter>
                         <AlertDialogCancel disabled={loading}>Cancel</AlertDialogCancel>
                         <AlertDialogAction
-                            onClick={handleAction}
+                            onClick={handleDelete}
                             disabled={loading}
-                            className={dialogContent.variant === "destructive" ? "bg-destructive text-destructive-foreground hover:bg-destructive/90" : ""}
+                            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                         >
                             {loading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-                            {dialogContent.actionText}
+                            Delete Plan
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>

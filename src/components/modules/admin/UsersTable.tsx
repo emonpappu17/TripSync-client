@@ -1,13 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { UserActionsDropdown } from "./UserActionsDropdown";
-// import { UserActionsDropdown } from "@/components/modules/admin/UserActionsDropdown";
+import { User } from "lucide-react";
+
 
 export default function UsersTable({ data, meta }: any) {
     if (!data?.length) {
-        return <div className="text-center py-12 text-muted-foreground">No users found</div>;
+        return (
+            <div className="flex flex-col items-center justify-center py-16 text-center space-y-4">
+                <div className="flex items-center justify-center w-16 h-16 rounded-full bg-muted">
+                    <User className="w-8 h-8 text-muted-foreground" />
+                </div>
+                <h3 className="text-lg font-semibold">No users found</h3>
+            </div>);
     }
 
     return (
