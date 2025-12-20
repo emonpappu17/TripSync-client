@@ -104,4 +104,21 @@ export async function getUsrById(id: string) {
         };
     }
 }
+export async function getUsers(params: any) {
+    try {
+        const response = await serverFetch.get(`/user?${params}`, {
+            // revalidate: 600, // Cache for 10 minutes
+            // tags: [`user-${id}`],
+        });
+
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.error(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        };
+    }
+}
 
