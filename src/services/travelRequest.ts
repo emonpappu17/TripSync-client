@@ -28,6 +28,8 @@ export async function createRequest(planId: string, message: string) {
             revalidateTag("sent-requests", { expire: 0 });
             revalidateTag("received-requests", { expire: 0 });
             revalidatePath("/requests/sent");
+            revalidateTag(`travel-plan-${planId}`, { expire: 0 })
+
         }
 
         return result;

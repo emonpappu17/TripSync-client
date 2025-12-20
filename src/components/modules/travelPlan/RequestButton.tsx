@@ -2,8 +2,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -15,8 +13,10 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { toast } from "sonner"; // Or your preferred toast library import
 import { createRequest } from "@/services/travelRequest";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "sonner";
 
 interface RequestButtonProps {
     travelPlanId: string;
@@ -45,9 +45,6 @@ const RequestButton = ({
     const handleInitialClick = () => {
         if (isRequested) return
         if (!isCurrentUser) {
-            // Store the current URL to redirect back after login if needed
-            // const currentPath = window.location.pathname;
-            // router.push(`/login?callbackUrl=${currentPath}`);
             router.push("/login");
             return;
         }
@@ -62,66 +59,28 @@ const RequestButton = ({
 
         try {
             setLoading(true);
-
-            const response = await createRequest(travelPlanId, message)
+            const response = await createRequest(travelPlanId, message);
 
             if (!response.success) {
                 toast.error(response.message || "Failed to send request");
-                return
+                return;
             }
-            // Success logic
+
             toast.success("Request sent successfully!");
             setIsOpen(false);
             setMessage("");
-            router.refresh();
         } catch (error: any) {
             console.error(error);
             toast.error(error.message || "Something went wrong. Please try again.");
         } finally {
+            router.refresh(); // refresh once, always
+            console.log('called finally');
             setLoading(false);
         }
     };
 
     return (
         <>
-            {/* <Button
-                className="w-full gradient-hero"
-                size="lg"
-                disabled={maxTravelersNumber === 0}
-                onClick={handleInitialClick}
-            >
-                {isRequested && 'Requested' || maxTravelersNumber === 0 ? 'Trip Full' : 'Request to Join'}
-            </Button> */}
-
-            {/* <Button
-                className="w-full gradient-hero"
-                size="lg"
-                disabled={maxTravelersNumber === 0 || isRequested}
-                onClick={handleInitialClick}
-            >
-                {isRequested
-                    ? "Requested"
-                    : (maxTravelersNumber - acceptedCount) === 0
-                        ? "Trip Full"
-                        : "Request to Join"}
-            </Button> */}
-
-
-            {/* <Button
-                className="w-full gradient-hero"
-                size="lg"
-                disabled={maxTravelersNumber === 0 || isRequested || isCompleted}
-                onClick={handleInitialClick}
-            >
-                {isCompleted
-                    ? "Trip Completed"
-                    : isRequested
-                        ? "Requested"
-                        : (maxTravelersNumber - acceptedCount) === 0
-                            ? "Trip Full"
-                            : "Request to Join"}
-            </Button> */}
-
             <Button
                 className="w-full gradient-hero"
                 size="lg"
@@ -143,8 +102,6 @@ const RequestButton = ({
                                 ? "Trip Full"
                                 : "Request to Join"}
             </Button>
-
-
 
             <Dialog open={isOpen} onOpenChange={setIsOpen} >
                 <DialogContent className="sm:max-w-[425px] p-5" >

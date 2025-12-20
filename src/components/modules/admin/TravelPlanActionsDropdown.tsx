@@ -42,17 +42,15 @@ export function TravelPlanActionsDropdown({ plan }: TravelPlanActionsDropdownPro
     const [showDialog, setShowDialog] = useState(false);
     const [showDetailsModal, setShowDetailsModal] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [reason, setReason] = useState("");
 
     const handleDelete = async () => {
         setLoading(true);
-        const result = await deleteTravelPlanByAdmin(plan.id, reason);
+        const result = await deleteTravelPlanByAdmin(plan.id);
         setLoading(false);
 
         if (result?.success) {
             toast.success(result.message || "Travel plan deleted successfully");
             setShowDialog(false);
-            setReason("");
             router.refresh();
         } else {
             toast.error(result?.message || "Failed to delete travel plan");

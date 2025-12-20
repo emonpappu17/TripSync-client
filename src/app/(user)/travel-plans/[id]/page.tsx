@@ -26,21 +26,6 @@ import Link from "next/link";
 // ISR: Revalidate every 5 minutes
 export const revalidate = 300;
 
-// Generate static params for popular plans (optional)
-// export async function generateStaticParams() {
-//     // Fetch top 50 most popular plans to pre-generate
-//     const params = new URLSearchParams();
-//     params.set('limit', '50');
-//     // params.set('sortBy', 'views');
-
-//     const response = await getAllTravelPlans(params);
-//     const plans = response?.data || [];
-
-//     return plans.map((plan: any) => ({
-//         id: plan.id,
-//     }));
-// }
-
 const DetailTravelPlanPage = async ({
     params,
 }: {
@@ -64,12 +49,14 @@ const DetailTravelPlanPage = async ({
         (req: any) => req.requesterId === currentUser?.id
     );
 
+    // console.log({ isRequested });
+
     const acceptedCount =
         plan?.requests?.filter((req: any) => req.status === "ACCEPTED").length || 0;
 
     const planOwner = plan?.user;
 
-    console.log({ planOwner });
+    // console.log({ planOwner });
 
     const startDate = plan?.startDate ? new Date(plan.startDate) : null;
     const endDate = plan?.endDate ? new Date(plan.endDate) : null;
@@ -349,6 +336,7 @@ const DetailTravelPlanPage = async ({
                             </div>
 
                             <div className="space-y-3">
+
                                 {isOwner ? (
                                     <Link href="/profile">
                                         <Button className="w-full gradient-hero" size="lg">

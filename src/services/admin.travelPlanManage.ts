@@ -57,7 +57,6 @@ export async function getTravelPlanById(planId: string) {
  */
 export async function deleteTravelPlanByAdmin(planId: string, reason?: string) {
     try {
-        console.log({ planId });
         const response = await serverFetch.delete(`/travelPlan/${planId}`, {
             headers: {
                 "Content-Type": "application/json",
