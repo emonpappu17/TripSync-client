@@ -9,7 +9,7 @@ export const revalidate = 60;
 
 export async function generateMetadata() {
     return {
-        title: "Explore Travel Plans | Travel Buddy",
+        title: "Explore Travel Plans | Travel Sync",
         description: "Discover and explore travel plans from travelers around the world",
     };
 }

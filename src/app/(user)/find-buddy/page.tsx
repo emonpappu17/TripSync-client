@@ -9,6 +9,12 @@ import { Award, MapPin, Star } from 'lucide-react';
 import Link from 'next/link';
 import { Suspense } from 'react';
 
+export async function generateMetadata() {
+    return {
+        title: "Find Travel Buddy | Travel Sync",
+        description: "Discover and explore travel plans from travelers around the world",
+    };
+}
 
 interface SearchParams {
     search?: string;
