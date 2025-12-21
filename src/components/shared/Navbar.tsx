@@ -51,8 +51,8 @@ const Navbar = ({ user }: NavbarProps) => {
                 ? [
                     { title: "Home", href: "/" },
                     { title: "Explore", href: "/explore" },
-                    { title: "My Plans", href: "/travel-plans" },
                     { title: "Find Buddy", href: "/find-buddy" },
+                    { title: "My Plans", href: "/travel-plans" },
                 ]
                 : [
                     { title: "Home", href: "/" },
@@ -112,8 +112,8 @@ const Navbar = ({ user }: NavbarProps) => {
                                 <Button variant="ghost" className="flex items-center gap-2">
                                     <Avatar
                                         className={`h-8 w-8 border-2 ${user.isVerified
-                                                ? "border-blue-400 ring-2 ring-blue-400 ring-offset-2" // premium look
-                                                : "border-transparent"
+                                            ? "border-blue-400 ring-2 ring-blue-400 ring-offset-2" // premium look
+                                            : "border-transparent"
                                             } rounded-full`}
                                     >
                                         <AvatarImage src={user.profileImage || ""} />

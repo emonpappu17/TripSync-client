@@ -1,17 +1,33 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Pagination from '@/components/modules/admin/Pagination';
+import SearchBuddy from '@/components/modules/explore/SearchBuddy';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { getUsers } from '@/services/user';
 import { Award, MapPin, Star } from 'lucide-react';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
-const FindBuddyPage = async () => {
-    const users = await getUsers('');
-    console.log({ users });
+
+interface SearchParams {
+    search?: string;
+}
+
+const FindBuddyPage = async ({
+    searchParams,
+}: {
+    searchParams: Promise<SearchParams>;
+}) => {
+    const {search} = (await searchParams) || {}
+    // console.log({ params });
+    const users = await getUsers(`${search ? `search=${search}` : ''}`);
+    // console.log({ users });
     return (
         <div className='space-y-6 container mx-auto px-4 max-w-6xl mb-24 mt-14'>
+            <Suspense fallback={<div>Loading search...</div>}>
+                <SearchBuddy></SearchBuddy>
+            </Suspense>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {users?.data?.map((traveler: any) => (
                     <Link key={traveler.id} href={`/profile/${traveler.id}`}>
