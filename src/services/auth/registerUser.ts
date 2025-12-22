@@ -4,7 +4,6 @@
 import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
 import { registerZodSchema } from "@/zod/auth.validation";
-import { redirect } from "next/navigation";
 import { loginUser } from "./loginUser";
 
 export async function registerUser(
@@ -45,7 +44,7 @@ export async function registerUser(
 
         const data = await response.json();
 
-        // console.log({ data });
+
 
         if (!data.success) {
             return {
@@ -72,7 +71,7 @@ export async function registerUser(
         if (error?.digest?.startsWith('NEXT_REDIRECT')) {
             throw error;
         }
-        console.log(error);
+        console.error(error);
         return { success: false, message: `${process.env.NODE_ENV === 'development' ? error.message : "Registration Failed. Please try again."}` };
     }
 }

@@ -74,7 +74,7 @@ const RequestButton = ({
             toast.error(error.message || "Something went wrong. Please try again.");
         } finally {
             router.refresh(); // refresh once, always
-            console.log('called finally');
+       
             setLoading(false);
         }
     };

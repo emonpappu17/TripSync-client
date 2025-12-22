@@ -34,7 +34,7 @@ export default async function AdminUsersPage({
     params.set("limit", "10");
 
     const result = await getAllUsers(params);
-    // console.log(result.meta.totalPages);
+ 
     return (
         <div className="container mx-auto py-6 px-4 min-h-screen max-w-7xl">
             <h1 className="text-3xl font-bold">Manage Users</h1>

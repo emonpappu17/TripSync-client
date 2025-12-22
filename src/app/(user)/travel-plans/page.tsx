@@ -11,6 +11,13 @@ import { ITravelPlan } from '@/types/travelPlan.interface';
 import TravelPlanActions from '@/components/modules/travelPlan/TravelPlanActions';
 import Image from 'next/image';
 
+export async function generateMetadata() {
+    return {
+        title: "My plans | Travel Sync",
+        description: "Discover my travel plans",
+    };
+}
+
 export const dynamic = 'force-dynamic';
 
 export default async function MyTravelPlansPage() {

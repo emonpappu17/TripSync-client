@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import Pagination from '@/components/modules/admin/Pagination';
 import SearchFilters from '@/components/modules/explore/SearchFilters';
 import TravelPlanCard from '@/components/modules/explore/TravelPlanCard';
 import { getAllTravelPlans } from '@/services/travel-plan';
@@ -100,7 +101,11 @@ export default async function ExplorePage({
                             </div>
                         )}
                     </div>
+
+                    <Pagination totalPages={travelPlans?.meta?.totalPages || 1} />
+
                 </div>
+
             </div>
         </div>
     );

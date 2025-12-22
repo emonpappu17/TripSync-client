@@ -11,11 +11,11 @@ const EditTravelPlanPage = async ({
 }
 ) => {
     const { id } = await params
-    // console.log({ id });
+   
     const res = await getTravelPlanById(id);
     const plan = res.data as ITravelPlan
 
-    // console.log({ plan });
+   
     return (
         <div className="min-h-screen py-8 mb-24">
             <div className="container mx-auto px-4 max-w-3xl">

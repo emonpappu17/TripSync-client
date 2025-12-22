@@ -16,7 +16,7 @@ import { Loader2, Lock, Mail, User } from "lucide-react";
 export default function RegisterForm() {
     const [state, formAction, isPending] = useActionState(registerUser, null);
 
-    // console.log({ state });
+  
 
     useEffect(() => {
         if (state?.success === false && state?.message) {

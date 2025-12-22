@@ -88,7 +88,7 @@ export default function ProfileEditForm({ user }: { user: IUser }) {
     }, [state]);
 
 
-    // console.log({ state });
+ 
     return (
         <form action={formAction} className="flex flex-col space-y-6">
             {/* Image Preview */}

@@ -31,7 +31,7 @@ export function TravelPlanMatches({ planId, currentUserId }: Props) {
                     toast.error('Failed to load matches');
                 }
             } catch (error: any) {
-                console.log('Failed to load matches:', error);
+                console.error('Failed to load matches:', error);
             } finally {
                 setIsLoading(false);
             }
@@ -73,7 +73,6 @@ export function TravelPlanMatches({ planId, currentUserId }: Props) {
         );
     }
 
-    console.log({ uniqueUsers });
     return (
         <Card className="p-6">
             <div className="flex items-center justify-between">

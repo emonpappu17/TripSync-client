@@ -129,7 +129,7 @@ export default function SearchFilters() {
     const handleKeyPress = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter') {
 
-            // console.log("jkjdlkfjaslkdf");
+           
             applyFilters();
         }
         applyFilters();

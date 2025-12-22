@@ -46,12 +46,17 @@ export function ReviewModal({
                 toast.success('Review updated successfully');
             } else {
                 // Create new review
-                await createReview({
+                const result = await createReview({
                     toReviewerId: toUserId,
-                    travelPlanId,
+                    tourPlanId: travelPlanId,
                     ...data,
                 });
-                toast.success('Review submitted successfully');
+
+                if (result.success) {
+                    toast.success(result.message || 'Review submitted successfully');
+                } else {
+                    toast.error(result.message || 'Failed to submit review');
+                }
             }
             onClose();
             router.refresh();

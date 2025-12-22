@@ -12,7 +12,7 @@ import { Suspense } from 'react';
 export async function generateMetadata() {
     return {
         title: "Find Travel Buddy | Travel Sync",
-        description: "Discover and explore travel plans from travelers around the world",
+        description: "Discover and find travel buddy from around the world",
     };
 }
 
@@ -77,7 +77,8 @@ const FindBuddyPage = async ({
                                         {/* Rating */}
                                         <div className="flex items-center justify-center gap-2 mb-4">
                                             <div className="flex items-center gap-1">
-                                                <Star className="w-4 h-4 fill-accent text-accent" />
+                                                <Star className="w-4 h-4 fill-yellow-400 text-yellow-400 " />
+                                                {/* <Star className="w-4 h-4 fill-accent text-accent" /> */}
                                                 <span className="font-semibold">{traveler?.avgRating || 0}</span>
                                             </div>
                                             <span className="text-sm text-muted-foreground">

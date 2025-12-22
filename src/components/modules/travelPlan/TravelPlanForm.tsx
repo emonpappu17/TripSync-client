@@ -70,8 +70,6 @@ export default function TravelPlanForm({ plan }: TravelPlanFormProps) {
         }
     };
 
-    // console.log('activities from==>', activities);
-
 
     const removeActivity = (value: string) => {
         setActivities((prev) => prev.filter((a) => a !== value));

@@ -4,13 +4,13 @@ import { serverFetch } from "@/lib/server-fetch";
 
 export async function createReview(data: {
     toReviewerId: string;
-    travelPlanId?: string;
+    tourPlanId?: string;
     rating: number;
     comment: string;
     isPublic?: boolean;
 }) {
     try {
-        // console.log({ planId, message });
+   
         const response = await serverFetch.post(`/review`, {
             headers: {
                 "Content-Type": "application/json",
@@ -21,7 +21,7 @@ export async function createReview(data: {
         const result = await response.json();
         return result;
     } catch (error: any) {
-        console.log(error);
+        console.error(error);
         return {
             success: false,
             message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
@@ -35,7 +35,7 @@ export async function getMyReviews() {
         const result = await response.json();
         return result;
     } catch (error: any) {
-        console.log(error);
+        console.error(error);
         return {
             success: false,
             message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
@@ -49,7 +49,7 @@ export async function getUserReviews(id: string) {
         const result = await response.json();
         return result;
     } catch (error: any) {
-        console.log(error);
+        console.error(error);
         return {
             success: false,
             message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
@@ -73,7 +73,7 @@ export async function updateReview(reviewId: string,
         const result = await response.json();
         return result;
     } catch (error: any) {
-        console.log(error);
+        console.error(error);
         return {
             success: false,
             message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
@@ -83,13 +83,13 @@ export async function updateReview(reviewId: string,
 
 export async function deleteReview(id: string) {
     try {
-        // console.log({ planId, message });
+        
         const response = await serverFetch.delete(`/review/${id}`)
         // return response
         const result = await response.json();
         return result;
     } catch (error: any) {
-        console.log(error);
+        console.error(error);
         return {
             success: false,
             message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`

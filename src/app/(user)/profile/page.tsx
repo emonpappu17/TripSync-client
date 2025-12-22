@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ProfileCard from '@/components/modules/profile/ProfileCard';
+import { RatingStars } from '@/components/modules/reviews/RatingStars';
 import { BackButton } from '@/components/shared/BackButton';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -13,6 +14,13 @@ import { Award, Calendar, Star, Users } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+export async function generateMetadata() {
+    return {
+        title: "Profile | Travel Sync",
+        description: "Discover traveler profile",
+    };
+}
+
 export const dynamic = 'force-dynamic';
 
 const ProfilePage = async () => {
@@ -21,7 +29,7 @@ const ProfilePage = async () => {
     const userReviews = await getMyReviews();
     const isOwnProfile = true
 
-    // console.log({ profileUser });
+ 
     return (
         <div className="min-h-screen py-8">
             <div className="container mx-auto px-4 max-w-6xl">
@@ -101,9 +109,11 @@ const ProfilePage = async () => {
                                                     <div className="flex items-center justify-between mb-1">
                                                         <h4 className="font-semibold">{review.formReviewer.fullName}</h4>
                                                         <div className="flex gap-0.5">
-                                                            {Array.from({ length: review.rating }).map((_, i) => (
+                                                            {/* {Array.from({ length: review.rating }).map((_, i) => (
                                                                 <Star key={i} className="w-4 h-4 fill-accent text-accent" />
-                                                            ))}
+                                                            ))} */}
+
+                                                            <RatingStars rating={userReviews?.meta.averageRating} size="md" />
                                                         </div>
                                                     </div>
                                                     <p className="text-sm text-muted-foreground mb-2">
