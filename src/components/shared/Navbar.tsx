@@ -54,12 +54,14 @@ const Navbar = ({ user }: NavbarProps) => {
                     { title: "Find Buddy", href: "/find-buddy" },
                     { title: "My Plans", href: "/travel-plans" },
                     { title: "About", href: "/about" },
+                    { title: "FAQ", href: "/faq" },
                 ]
                 : [
                     { title: "Home", href: "/" },
                     { title: "Explore", href: "/explore" },
                     { title: "Find Buddy", href: "/find-buddy" },
                     { title: "About", href: "/about" },
+                    { title: "FAQ", href: "/faq" },
                 ];
 
     return (

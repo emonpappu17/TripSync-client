@@ -20,7 +20,7 @@ export default function AboutPage() {
                         Travel Together. <span className="text-primary">Not Alone.</span>
                     </h1>
                     <p className="text-muted-foreground text-lg md:text-xl mb-8">
-                        Travel Buddy & Meetup is a social travel platform that helps
+                        Travel Sync & Meetup is a social travel platform that helps
                         travelers connect, plan trips, and explore the world together.
                         Turn solo journeys into shared adventures.
                     </p>
@@ -105,7 +105,7 @@ export default function AboutPage() {
             <section className="py-16">
                 <div className="container mx-auto px-4 max-w-6xl">
                     <h2 className="text-3xl font-bold text-center mb-12">
-                        Why Choose Travel Buddy & Meetup?
+                        Why Choose Travel Sync & Meetup?
                     </h2>
 
                     <div className="grid md:grid-cols-4 gap-6">
@@ -160,7 +160,7 @@ export default function AboutPage() {
             <section className="py-20 bg-primary/50 text-primary-foreground">
                 <div className="container mx-auto px-4 text-center max-w-4xl">
                     <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                        Ready to Find Your Next Travel Buddy?
+                        Ready to Find Your Next Travel Sync?
                     </h2>
                     <p className="text-lg opacity-90 mb-8">
                         Join thousands of travelers discovering the world together.
