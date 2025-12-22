@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import {
     Accordion,
@@ -8,6 +8,15 @@ import {
 } from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
 import { HelpCircle } from "lucide-react";
+
+export async function generateMetadata() {
+    return {
+        title: "FAQs | Travel Sync",
+        description:
+            "Find answers to frequently asked questions about Travel Sync, including travel buddies, subscriptions, safety, travel plans, and more.",
+    };
+}
+
 
 export default function FAQPage() {
     return (

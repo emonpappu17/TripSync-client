@@ -10,6 +10,15 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
+export async function generateMetadata() {
+    return {
+        title: "About Us | Travel Sync",
+        description:
+            "Learn about Travel Sync — a social travel platform that helps travelers connect, plan trips together, and find the perfect travel buddy worldwide.",
+    };
+}
+
+
 export default function AboutPage() {
     return (
         <main className="min-h-screen bg-background">
