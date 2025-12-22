@@ -28,7 +28,7 @@ export async function proxy(request: NextRequest) {
     }
 
     // ✅ ROUTE GROUPS
-    const publicRoutes = ["/", "/login", "/register", "/explore", "/find-buddy"];
+    const publicRoutes = ["/", "/login", "/register", "/explore", "/find-buddy", "/about"];
 
     const authRoutes = ["/login", "/register"];
 
